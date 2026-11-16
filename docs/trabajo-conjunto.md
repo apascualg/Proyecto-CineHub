@@ -16,9 +16,9 @@ La información funcional completa está en `README.md` y la propuesta inicial e
 
 ## Decisiones que deben tomar juntos
 
-1. Confirmar si se utilizará SQLite o MySQL.
-2. Elegir Blade puro o Blade + Livewire.
-3. Confirmar si será obligatorio desplegar la aplicación mediante una URL, ya que `docs/directius-projecte.md` lo exige aunque el README lo presenta como opcional.
+1. MySQL utlilizamos.
+2. Elegimos Blade puro.
+3. Es obligatorio desplegar la aplicacion mediante url.
 4. Definir los nombres definitivos de las rutas.
 5. Confirmar el alcance mínimo para la presentación.
 6. Decidir si la importación desde TMDB queda fuera del MVP.

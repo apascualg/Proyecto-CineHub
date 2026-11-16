@@ -1061,6 +1061,7 @@
         },
         {
             "name": "laravel/framework",
+<<<<<<< HEAD
             "version": "v13.40.0",
             "source": {
                 "type": "git",
@@ -1071,6 +1072,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/framework/zipball/1449bf241017087fbd38c118ecaabef3f6797fdc",
                 "reference": "1449bf241017087fbd38c118ecaabef3f6797fdc",
+=======
+            "version": "v13.42.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/framework.git",
+                "reference": "f5c01f6b63803f16f38ebb31622c4fea412bd022"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/f5c01f6b63803f16f38ebb31622c4fea412bd022",
+                "reference": "f5c01f6b63803f16f38ebb31622c4fea412bd022",
+>>>>>>> 9c5283526ef66597fe547f92b384d88d72a21ea7
                 "shasum": ""
             },
             "require": {
@@ -1096,7 +1109,11 @@
                 "league/commonmark": "^2.8.1",
                 "league/flysystem": "^3.25.1",
                 "league/flysystem-local": "^3.25.1",
+<<<<<<< HEAD
                 "league/uri": "^7.5.1",
+=======
+                "league/uri": "^7.6",
+>>>>>>> 9c5283526ef66597fe547f92b384d88d72a21ea7
                 "monolog/monolog": "^3.10",
                 "nesbot/carbon": "^3.8.4",
                 "nunomaduro/termwind": "^2.0",
@@ -1173,11 +1190,19 @@
                 "spatie/once": "*"
             },
             "require-dev": {
+<<<<<<< HEAD
                 "ably/ably-php": "^1.0",
+=======
+                "ably/pubsub-server": "^1.0|^2.0",
+>>>>>>> 9c5283526ef66597fe547f92b384d88d72a21ea7
                 "aws/aws-sdk-php": "^3.322.9",
                 "ext-gmp": "*",
                 "fakerphp/faker": "^1.24",
                 "intervention/image": "^4.2",
+<<<<<<< HEAD
+=======
+                "jasonmccreary/double": "^1.1",
+>>>>>>> 9c5283526ef66597fe547f92b384d88d72a21ea7
                 "laravel/pint": "^1.18",
                 "league/flysystem-aws-s3-v3": "^3.25.1",
                 "league/flysystem-ftp": "^3.25.1",
@@ -1189,7 +1214,11 @@
                 "orchestra/testbench-core": "^11.6.0",
                 "pda/pheanstalk": "^7.0.0 || ^8.0.0",
                 "php-http/discovery": "^1.15",
+<<<<<<< HEAD
                 "phpstan/phpstan": "2.3.1",
+=======
+                "phpstan/phpstan": "2.3.5",
+>>>>>>> 9c5283526ef66597fe547f92b384d88d72a21ea7
                 "phpunit/phpunit": "^11.5.50 || ^12.5.8 || ^13.0.3",
                 "predis/predis": "^2.3 || ^3.0",
                 "rector/rector": "2.6.3",
@@ -1202,7 +1231,11 @@
                 "web-token/jwt-library": "^4.1"
             },
             "suggest": {
+<<<<<<< HEAD
                 "ably/ably-php": "Required to use the Ably broadcast driver (^1.0).",
+=======
+                "ably/pubsub-server": "Required to use the Ably broadcast driver (^1.0|^2.0).",
+>>>>>>> 9c5283526ef66597fe547f92b384d88d72a21ea7
                 "aws/aws-sdk-php": "Required to use the SQS queue driver, DynamoDb failed job storage, and SES mail driver (^3.322.9).",
                 "brianium/paratest": "Required to run tests in parallel (^7.0 || ^8.0).",
                 "ext-apcu": "Required to use the APC cache driver.",
@@ -1288,7 +1321,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
+<<<<<<< HEAD
             "time": "2026-11-03T15:07:18+00:00"
+=======
+            "time": "2026-11-10T15:54:30+00:00"
+>>>>>>> 9c5283526ef66597fe547f92b384d88d72a21ea7
         },
         {
             "name": "laravel/prompts",
@@ -1350,6 +1387,7 @@
         },
         {
             "name": "laravel/serializable-closure",
+<<<<<<< HEAD
             "version": "v2.1.0",
             "source": {
                 "type": "git",
@@ -1360,6 +1398,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/serializable-closure/zipball/2d5869a838bbcf37e0d8b0568fc41914e81374b5",
                 "reference": "2d5869a838bbcf37e0d8b0568fc41914e81374b5",
+=======
+            "version": "v2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/serializable-closure.git",
+                "reference": "2bfb44e8af009b553ed2c060c94b0bc3c67b4769"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/serializable-closure/zipball/2bfb44e8af009b553ed2c060c94b0bc3c67b4769",
+                "reference": "2bfb44e8af009b553ed2c060c94b0bc3c67b4769",
+>>>>>>> 9c5283526ef66597fe547f92b384d88d72a21ea7
                 "shasum": ""
             },
             "require": {
@@ -1407,6 +1457,7 @@
                 "issues": "https://github.com/laravel/serializable-closure/issues",
                 "source": "https://github.com/laravel/serializable-closure"
             },
+<<<<<<< HEAD
             "time": "2026-09-22T14:32:34+00:00"
         },
         {
@@ -1421,6 +1472,22 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/tinker/zipball/4faba77764bd33411735936acdf30446d058c78b",
                 "reference": "4faba77764bd33411735936acdf30446d058c78b",
+=======
+            "time": "2026-10-14T21:20:29+00:00"
+        },
+        {
+            "name": "laravel/tinker",
+            "version": "v3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/tinker.git",
+                "reference": "5fab2518167975b302e10d1fdf9a8c8113849201"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/tinker/zipball/5fab2518167975b302e10d1fdf9a8c8113849201",
+                "reference": "5fab2518167975b302e10d1fdf9a8c8113849201",
+>>>>>>> 9c5283526ef66597fe547f92b384d88d72a21ea7
                 "shasum": ""
             },
             "require": {
@@ -1428,6 +1495,7 @@
                 "illuminate/contracts": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
                 "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
                 "php": "^8.1",
+<<<<<<< HEAD
                 "psy/psysh": "^0.12.0",
                 "symfony/var-dumper": "^5.4|^6.0|^7.0|^8.0"
             },
@@ -1435,6 +1503,14 @@
                 "mockery/mockery": "~1.3.3|^1.4.2",
                 "phpstan/phpstan": "^1.10",
                 "phpunit/phpunit": "^10.5|^11.5"
+=======
+                "psy/psysh": "^0.12.19",
+                "symfony/var-dumper": "^5.4|^6.0|^7.0|^8.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^10.5|^11.5|^12.5|^13.4"
+>>>>>>> 9c5283526ef66597fe547f92b384d88d72a21ea7
             },
             "suggest": {
                 "illuminate/database": "The Illuminate Database package (^8.0|^9.0|^10.0|^11.0|^12.0|^13.0)."
@@ -1474,9 +1550,15 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/tinker/issues",
+<<<<<<< HEAD
                 "source": "https://github.com/laravel/tinker/tree/v3.0.2"
             },
             "time": "2026-03-17T14:54:13+00:00"
+=======
+                "source": "https://github.com/laravel/tinker/tree/v3.1.0"
+            },
+            "time": "2026-10-16T11:13:33+00:00"
+>>>>>>> 9c5283526ef66597fe547f92b384d88d72a21ea7
         },
         {
             "name": "league/commonmark",
@@ -6194,6 +6276,7 @@
         },
         {
             "name": "filp/whoops",
+<<<<<<< HEAD
             "version": "2.19.2",
             "source": {
                 "type": "git",
@@ -6204,6 +6287,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/filp/whoops/zipball/84e33631273138ac103d045dc02b0fb7e5485582",
                 "reference": "84e33631273138ac103d045dc02b0fb7e5485582",
+=======
+            "version": "2.19.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/filp/whoops.git",
+                "reference": "d5480d53f10069dc4620a39f87e38e8945d47322"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/d5480d53f10069dc4620a39f87e38e8945d47322",
+                "reference": "d5480d53f10069dc4620a39f87e38e8945d47322",
+>>>>>>> 9c5283526ef66597fe547f92b384d88d72a21ea7
                 "shasum": ""
             },
             "require": {
@@ -6253,7 +6348,11 @@
             ],
             "support": {
                 "issues": "https://github.com/filp/whoops/issues",
+<<<<<<< HEAD
                 "source": "https://github.com/filp/whoops/tree/2.19.2"
+=======
+                "source": "https://github.com/filp/whoops/tree/2.19.3"
+>>>>>>> 9c5283526ef66597fe547f92b384d88d72a21ea7
             },
             "funding": [
                 {
@@ -6261,7 +6360,11 @@
                     "type": "github"
                 }
             ],
+<<<<<<< HEAD
             "time": "2026-11-03T23:38:01+00:00"
+=======
+            "time": "2026-11-09T23:30:17+00:00"
+>>>>>>> 9c5283526ef66597fe547f92b384d88d72a21ea7
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -6382,6 +6485,7 @@
         },
         {
             "name": "laravel/pail",
+<<<<<<< HEAD
             "version": "v1.2.7",
             "source": {
                 "type": "git",
@@ -6392,10 +6496,23 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/pail/zipball/2f7d27dada8effc48b8c424445a69cca7007daaa",
                 "reference": "2f7d27dada8effc48b8c424445a69cca7007daaa",
+=======
+            "version": "v1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/pail.git",
+                "reference": "72d615ff1104717c1317c6d5d7eab679e43a0408"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/pail/zipball/72d615ff1104717c1317c6d5d7eab679e43a0408",
+                "reference": "72d615ff1104717c1317c6d5d7eab679e43a0408",
+>>>>>>> 9c5283526ef66597fe547f92b384d88d72a21ea7
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
+<<<<<<< HEAD
                 "illuminate/console": "^10.24|^11.0|^12.0|^13.0",
                 "illuminate/contracts": "^10.24|^11.0|^12.0|^13.0",
                 "illuminate/log": "^10.24|^11.0|^12.0|^13.0",
@@ -6414,6 +6531,26 @@
                 "phpstan/phpstan": "^1.12.27",
                 "symfony/var-dumper": "^6.3|^7.0|^8.0",
                 "symfony/yaml": "^6.3|^7.0|^8.0"
+=======
+                "illuminate/console": "^12.0|^13.0",
+                "illuminate/contracts": "^12.0|^13.0",
+                "illuminate/log": "^12.0|^13.0",
+                "illuminate/process": "^12.0|^13.0",
+                "illuminate/support": "^12.0|^13.0",
+                "nunomaduro/termwind": "^2.0",
+                "php": "^8.2",
+                "symfony/console": "^7.0|^8.0"
+            },
+            "require-dev": {
+                "laravel/framework": "^12.69|^13.30",
+                "laravel/pint": "^1.13",
+                "orchestra/testbench-core": "^10.8|^11.0",
+                "pestphp/pest": "^3.0|^4.0",
+                "pestphp/pest-plugin-type-coverage": "^3.0|^4.0",
+                "phpstan/phpstan": "^1.12.27",
+                "symfony/var-dumper": "^7.0|^8.0",
+                "symfony/yaml": "^7.0|^8.0"
+>>>>>>> 9c5283526ef66597fe547f92b384d88d72a21ea7
             },
             "type": "library",
             "extra": {
@@ -6458,7 +6595,11 @@
                 "issues": "https://github.com/laravel/pail/issues",
                 "source": "https://github.com/laravel/pail"
             },
+<<<<<<< HEAD
             "time": "2026-05-20T22:24:57+00:00"
+=======
+            "time": "2026-11-09T14:56:19+00:00"
+>>>>>>> 9c5283526ef66597fe547f92b384d88d72a21ea7
         },
         {
             "name": "laravel/pao",
