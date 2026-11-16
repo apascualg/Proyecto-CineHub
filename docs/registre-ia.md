@@ -55,7 +55,7 @@
 | Resultat | Es van crear el registre, l'inici i el tancament de sessió, l'edició del perfil, el middleware `admin`, les vistes Blade, els usuaris de prova i els tests d'autenticació i autorització. Les rutes i la configuració del middleware es van validar correctament i Pint no va detectar errors de format. Els tests no es van poder executar perquè el PHP de l'entorn no té habilitat el driver `pdo_sqlite`, requerit per la configuració de PHPUnit. |
 | Commit / PR | |
 
-## Registre 5
+## Registre 6
 
 | Camp | Contingut |
 |---|---|
@@ -63,5 +63,5 @@
 | Eina | GitHub Copilot |
 | Objectiu | Implementar l'autenticació d'usuaris i els rols user i admin a CineHub. |
 | Prompt | Implementa l'autenticació amb registre, inici de sessió, tancament de sessió i autorització per rols en aquest projecte Laravel. Revisa primer l'estructura existent i no permetis que un usuari modifiqui el seu propi rol. |
-| Resultat | Es va implementar i validar l'autenticació, la protecció de rutes i el middleware d'administrador. |
+| Resultat | Es va implementar i validar l'autenticació, la protecció de rutes i el middleware d'administrador. Els tests es van executar correctament després de corregir la redirecció del perfil, amb 9 tests superats i 33 assertions. |
 | Commit / PR | Enllaç al commit o pull request corresponent |
