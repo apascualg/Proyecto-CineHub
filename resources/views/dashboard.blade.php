@@ -79,6 +79,7 @@
 
                 <div class="catalog-grid">
                     @forelse ($titles as $title)
+                        <a href="{{ route('titles.show', $title) }}" class="movie-card__link">
                         <article class="movie-card">
                             <div class="movie-card__poster @if (!$title->poster_path) poster--fallback @endif" @if ($title->poster_path) style="background-image: url('{{ $title->poster_path }}')" @endif></div>
                             <div class="movie-card__body">
@@ -90,6 +91,7 @@
                                 <p>{{ $title->genres->pluck('name')->join(' · ') ?: 'Sin género' }} · {{ $title->release_date?->format('Y') ?: 'Sin año' }}</p>
                             </div>
                         </article>
+                        </a>
                     @empty
                         <p class="catalog-empty">No hemos encontrado títulos con esos filtros.</p>
                     @endforelse

@@ -15,3 +15,5 @@
 - Añadidas películas, series, géneros, personas, créditos, valoraciones, reseñas, comentarios y listas de prueba.
 - Verificada la ejecución repetida de los seeders sin duplicar datos.
 - Añadidas pruebas específicas para los seeders.
+## [v1.2.1]
+- Errores de filtraje parcialmente arreglados.

@@ -1,0 +1,90 @@
+@extends('layouts.app')
+
+@section('content')
+    <article class="title-detail">
+        <a href="{{ route('dashboard') }}" class="title-detail__back">Volver al catálogo</a>
+
+        <header class="title-detail__header">
+            <div class="title-detail__poster @if (!$title->poster_path) poster--fallback @endif" @if ($title->poster_path) style="background-image: url('{{ $title->poster_path }}')" @endif></div>
+            <div class="title-detail__intro">
+                <span class="movie-card__type">{{ $title->type === 'series' ? 'Serie' : 'Película' }}</span>
+                <h1>{{ $title->title }}</h1>
+                @if ($title->original_title && $title->original_title !== $title->title)
+                    <p class="title-detail__original">{{ $title->original_title }}</p>
+                @endif
+                <p class="title-detail__meta">{{ $title->release_date?->format('Y') ?: 'Sin año' }} · {{ $title->genres->pluck('name')->join(' · ') ?: 'Sin género' }}</p>
+                <p class="title-detail__synopsis">{{ $title->synopsis ?: 'Este título todavía no tiene sinopsis.' }}</p>
+                <div class="title-detail__score">
+                    <strong>{{ $title->ratings_avg_score ? number_format($title->ratings_avg_score, 1) : 'Sin nota' }}</strong>
+                    <span>{{ $title->ratings_count }} valoraciones</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="title-detail__content">
+            <section class="interaction-panel">
+                <h2>Valora este título</h2>
+                <form method="POST" action="{{ route('titles.ratings.store', $title) }}" class="rating-form">
+                    @csrf
+                    <label for="score">Tu puntuación</label>
+                    <div class="rating-form__controls">
+                        <select id="score" name="score" required>
+                            <option value="">Selecciona una puntuación</option>
+                            @for ($score = 1; $score <= 10; $score++)
+                                <option value="{{ $score }}" @selected((int) $userRating === $score)>{{ $score }}/10</option>
+                            @endfor
+                        </select>
+                        <button type="submit">{{ $userRating ? 'Actualizar valoración' : 'Guardar valoración' }}</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="interaction-panel">
+                <h2>{{ $userReview ? 'Tu reseña' : 'Escribe una reseña' }}</h2>
+                <form method="POST" action="{{ $userReview ? route('reviews.update', $userReview) : route('titles.reviews.store', $title) }}" class="review-form">
+                    @csrf
+                    @if ($userReview)
+                        @method('PUT')
+                    @endif
+                    <label for="headline">Título de la reseña <span>(opcional)</span></label>
+                    <input id="headline" name="headline" type="text" maxlength="120" value="{{ old('headline', $userReview?->headline) }}" placeholder="¿Qué te ha parecido?" />
+                    <label for="body">Reseña</label>
+                    <textarea id="body" name="body" rows="6" minlength="10" maxlength="5000" required placeholder="Escribe tu opinión...">{{ old('body', $userReview?->body) }}</textarea>
+                    <button type="submit">{{ $userReview ? 'Actualizar reseña' : 'Publicar reseña' }}</button>
+                </form>
+                @if ($userReview)
+                    <form method="POST" action="{{ route('reviews.destroy', $userReview) }}" class="review-delete-form">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Eliminar mi reseña</button>
+                    </form>
+                    <p class="review-status">Estado: {{ $userReview->status === 'approved' ? 'publicada' : 'pendiente de moderación' }}</p>
+                @endif
+            </section>
+        </div>
+
+        <section class="reviews-section">
+            <div class="reviews-section__heading">
+                <h2>Reseñas de la comunidad</h2>
+                <span>{{ $reviews->count() }}</span>
+            </div>
+
+            @forelse ($reviews as $review)
+                <article class="review-card">
+                    <div class="review-card__header">
+                        <div>
+                            <h3>{{ $review->headline ?: 'Reseña sin título' }}</h3>
+                            <p>Por {{ $review->user->name }} · {{ $review->created_at->format('d/m/Y') }}</p>
+                        </div>
+                        @if ($review->status !== 'approved')
+                            <span class="review-status">Pendiente</span>
+                        @endif
+                    </div>
+                    <p>{{ $review->body }}</p>
+                </article>
+            @empty
+                <p class="catalog-empty">Todavía no hay reseñas aprobadas para este título.</p>
+            @endforelse
+        </section>
+    </article>
+@endsection
