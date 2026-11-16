@@ -357,6 +357,28 @@ select {
     color: var(--cine-gray);
 }
 
+.filter-group__label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--cine-gray);
+}
+
+.filter-year-range {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.5rem 0.65rem;
+    align-items: center;
+}
+
+.filter-year-range label {
+    font-size: 0.78rem;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--cine-gray);
+}
+
 .filter-group input,
 .filter-group select {
     width: 100%;
@@ -437,6 +459,10 @@ select {
     background: linear-gradient(135deg, #1f1b1b, #3f3f46 46%, #a78bfa);
 }
 
+.poster--fallback {
+    background: linear-gradient(135deg, #242424, #f4a400 48%, #f5f4f1);
+}
+
 .movie-card__body {
     padding: 1rem 1rem 1.1rem;
 }
@@ -480,6 +506,21 @@ select {
 .movie-card__body p {
     margin: 0;
     color: var(--cine-gray);
+}
+
+.catalog-empty {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 3rem 1rem;
+    text-align: center;
+    color: var(--cine-gray);
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px dashed var(--cine-border);
+    border-radius: 1rem;
+}
+
+.catalog-pagination {
+    margin-top: 1.5rem;
 }
 
 @media (max-width: 900px) {

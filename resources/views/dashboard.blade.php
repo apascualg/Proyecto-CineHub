@@ -7,128 +7,96 @@
             <h1>Encuentra tu próxima película o serie</h1>
         </div>
 
-        <div class="catalog-toolbar">
-            <div class="catalog-search">
-                <input type="text" placeholder="Busca avanzada" aria-label="Buscar contenido" />
-                <button type="button">Buscar</button>
+        <form method="GET" action="{{ route('dashboard') }}" class="catalog-search-form">
+            <div class="catalog-toolbar">
+                <div class="catalog-search">
+                    <input type="search" name="title" value="{{ $filters['title'] ?? '' }}" placeholder="Buscar por título" aria-label="Buscar por título" />
+                    <button type="submit">Buscar</button>
+                </div>
             </div>
-        </div>
 
-        <div class="catalog-layout">
-            <aside class="catalog-filters">
+            <div class="catalog-layout">
+                <aside class="catalog-filters">
                 <div class="catalog-filters__header">
                     <h2>Filtros</h2>
-                    <button type="button" class="catalog-filters__reset">Limpiar</button>
+                    <a href="{{ route('dashboard') }}" class="catalog-filters__reset">Limpiar</a>
                 </div>
 
                 <div class="filter-group">
                     <label for="type">Tipo</label>
-                    <select id="type">
-                        <option>Películas</option>
-                        <option>Series</option>
-                        <option>Todos</option>
+                    <select id="type" name="type">
+                        <option value="">Todos</option>
+                        <option value="movie" @selected(($filters['type'] ?? '') === 'movie')>Películas</option>
+                        <option value="series" @selected(($filters['type'] ?? '') === 'series')>Series</option>
                     </select>
                 </div>
 
                 <div class="filter-group">
                     <label for="genre">Género</label>
-                    <select id="genre">
-                        <option>Acción</option>
-                        <option>Drama</option>
-                        <option>Ciencia ficción</option>
-                        <option>Animación</option>
+                    <select id="genre" name="genre">
+                        <option value="">Todos los géneros</option>
+                        @foreach ($genres as $genre)
+                            <option value="{{ $genre->id }}" @selected((string) ($filters['genre'] ?? '') === (string) $genre->id)>{{ $genre->name }}</option>
+                        @endforeach
                     </select>
                 </div>
 
                 <div class="filter-group">
-                    <label for="year">Año</label>
-                    <select id="year">
-                        <option>2024</option>
-                        <option>2023</option>
-                        <option>2022</option>
-                        <option>2021+</option>
-                    </select>
+                    <span class="filter-group__label">Año de estreno</span>
+                    <div class="filter-year-range">
+                        <label for="year-from">Desde</label>
+                        <input id="year-from" name="year_from" value="{{ $filters['year_from'] ?? '' }}" type="number" min="1888" max="2100" placeholder="2024" />
+                        <label for="year-to">Hasta</label>
+                        <input id="year-to" name="year_to" value="{{ $filters['year_to'] ?? '' }}" type="number" min="1888" max="2100" placeholder="2026" />
+                    </div>
                 </div>
 
                 <div class="filter-group">
                     <label for="rating">Puntuación</label>
-                    <select id="rating">
-                        <option>7.0 o más</option>
-                        <option>8.0 o más</option>
-                        <option>9.0 o más</option>
+                    <select id="rating" name="rating">
+                        <option value="">Cualquier puntuación</option>
+                        <option value="7" @selected(($filters['rating'] ?? '') == 7)>7.0 o más</option>
+                        <option value="8" @selected(($filters['rating'] ?? '') == 8)>8.0 o más</option>
+                        <option value="9" @selected(($filters['rating'] ?? '') == 9)>9.0 o más</option>
                     </select>
                 </div>
 
                 <div class="filter-group">
                     <label for="director">Director</label>
-                    <input id="director" type="text" placeholder="Nombre del director" />
+                    <input id="director" name="director" value="{{ $filters['director'] ?? '' }}" type="text" placeholder="Nombre del director" />
                 </div>
 
                 <div class="filter-group">
                     <label for="actor">Actor</label>
-                    <input id="actor" type="text" placeholder="Nombre del actor" />
+                    <input id="actor" name="actor" value="{{ $filters['actor'] ?? '' }}" type="text" placeholder="Nombre del actor" />
                 </div>
             </aside>
 
             <section class="catalog-results">
                 <div class="catalog-results__topbar">
-                    <p>Mostrando <strong>24</strong> resultados</p>
-                    <div class="catalog-results__sort">
-                        <span>Ordenar por:</span>
-                        <button type="button">Más relevantes</button>
-                    </div>
+                    <p>Mostrando <strong>{{ $titles->total() }}</strong> resultados</p>
                 </div>
 
                 <div class="catalog-grid">
-                    <article class="movie-card">
-                        <div class="movie-card__poster poster--one"></div>
-                        <div class="movie-card__body">
-                            <div class="movie-card__meta">
-                                <span class="movie-card__type">Película</span>
-                                <span class="movie-card__rating">8.7</span>
+                    @forelse ($titles as $title)
+                        <article class="movie-card">
+                            <div class="movie-card__poster @if (!$title->poster_path) poster--fallback @endif" @if ($title->poster_path) style="background-image: url('{{ $title->poster_path }}')" @endif></div>
+                            <div class="movie-card__body">
+                                <div class="movie-card__meta">
+                                    <span class="movie-card__type">{{ $title->type === 'series' ? 'Serie' : 'Película' }}</span>
+                                    <span class="movie-card__rating">{{ $title->ratings_avg_score ? number_format($title->ratings_avg_score, 1) : 'Sin nota' }}</span>
+                                </div>
+                                <h3>{{ $title->title }}</h3>
+                                <p>{{ $title->genres->pluck('name')->join(' · ') ?: 'Sin género' }} · {{ $title->release_date?->format('Y') ?: 'Sin año' }}</p>
                             </div>
-                            <h3>La ciudad de las sombras</h3>
-                            <p>Drama · 2024</p>
-                        </div>
-                    </article>
-
-                    <article class="movie-card">
-                        <div class="movie-card__poster poster--two"></div>
-                        <div class="movie-card__body">
-                            <div class="movie-card__meta">
-                                <span class="movie-card__type">Serie</span>
-                                <span class="movie-card__rating">9.1</span>
-                            </div>
-                            <h3>Seis pasos a la luna</h3>
-                            <p>Ciencia ficción · 2023</p>
-                        </div>
-                    </article>
-
-                    <article class="movie-card">
-                        <div class="movie-card__poster poster--three"></div>
-                        <div class="movie-card__body">
-                            <div class="movie-card__meta">
-                                <span class="movie-card__type">Película</span>
-                                <span class="movie-card__rating">8.2</span>
-                            </div>
-                            <h3>Velocidad del amanecer</h3>
-                            <p>Acción · 2022</p>
-                        </div>
-                    </article>
-
-                    <article class="movie-card">
-                        <div class="movie-card__poster poster--four"></div>
-                        <div class="movie-card__body">
-                            <div class="movie-card__meta">
-                                <span class="movie-card__type">Serie</span>
-                                <span class="movie-card__rating">8.5</span>
-                            </div>
-                            <h3>Horizonte paralelo</h3>
-                            <p>Drama · 2024</p>
-                        </div>
-                    </article>
+                        </article>
+                    @empty
+                        <p class="catalog-empty">No hemos encontrado títulos con esos filtros.</p>
+                    @endforelse
                 </div>
+                <div class="catalog-pagination">{{ $titles->links() }}</div>
             </section>
-        </div>
+            </div>
+        </form>
     </section>
 @endsection
