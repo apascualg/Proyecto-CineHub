@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\User\TitleInteractionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,6 +24,17 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [CatalogController::class, 'index'])
         ->name('dashboard');
+
+    Route::get('/titles/{title}', [TitleInteractionController::class, 'show'])
+        ->name('titles.show');
+    Route::post('/titles/{title}/rating', [TitleInteractionController::class, 'storeRating'])
+        ->name('titles.ratings.store');
+    Route::post('/titles/{title}/reviews', [TitleInteractionController::class, 'storeReview'])
+        ->name('titles.reviews.store');
+    Route::put('/reviews/{review}', [TitleInteractionController::class, 'updateReview'])
+        ->name('reviews.update');
+    Route::delete('/reviews/{review}', [TitleInteractionController::class, 'destroyReview'])
+        ->name('reviews.destroy');
 
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');

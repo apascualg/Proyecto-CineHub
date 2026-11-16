@@ -110,3 +110,25 @@
 | Prompt | Crea todas las factories del proyecto, los seeders necesarios y modifica el DatabaseSeeder para generar usuarios, películas, series, géneros, personas, créditos, valoraciones, reseñas, comentarios y listas de demostración. Haz que el seeding sea repetible y actualiza la documentación del reparto de tareas. |
 | Resultat | Es van crear les factories de tots els models, els seeders d'usuaris, catàleg i interaccions, i es va fer idempotent el seeding. També es van afegir proves específiques; el conjunt d'autenticació, perfil i seeders supera 12 tests amb 56 assertions. |
 | Commit / PR | |
+
+## Registre 11
+
+| Camp | Contingut |
+|---|---|
+| Data i autor | 2026-11-16 — Eric |
+| Eina | GitHub Copilot |
+| Objectiu | Implementar la ficha de cada pel·lícula o sèrie, les valoracions i les ressenyes dels usuaris. |
+| Prompt | El layout ja està acabat i la base de dades i l'autenticació ja estan preparades. Passem a ressenyes i valoracions: crea una ficha de títol amb una valoració de l'1 al 10, permet actualitzar la valoració existent, crear, editar i eliminar les meves ressenyes i deixa les ressenyes noves pendents de moderació. |
+| Resultat | Vaig crear `TitleInteractionController`, la vista de detall del títol i les rutes protegides per consultar títols, guardar o actualitzar valoracions i crear, editar o eliminar ressenyes pròpies. També vaig enllaçar les targetes del catàleg amb la ficha i vaig mostrar la mitjana, el nombre de valoracions, les ressenyes aprovades i l'estat de moderació de la meva ressenya. Vaig validar la sintaxi PHP, les rutes, la compilació de les vistes Blade i `npm run build`. |
+| Commit / PR | |
+
+## Registre 12
+
+| Camp | Contingut |
+|---|---|
+| Data i autor | 2026-11-16 — Eric |
+| Eina | GitHub Copilot |
+| Objectiu | Deixar documentat el punt assolit al final de la jornada i preparar la continuació del treball. |
+| Prompt | Afegeix al registre que avui hem acabat i explica fins on hem arribat i per on hem de continuar el següent dia. |
+| Resultat | Vaig deixar acabats el layout, el catàleg amb cerca i filtres, la ficha de títol, les valoracions i les ressenyes. També vaig documentar que el següent dia he de començar pels tests funcionals i continuar amb comentaris, llistes personals, perfil i proves d'integració. |
+| Commit / PR | |

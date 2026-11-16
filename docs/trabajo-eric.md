@@ -20,10 +20,28 @@ Eric será responsable de la interfaz compartida y de las funciones que los usua
   - `WatchlistTitleFactory`
   - `CommentFactory`
   - `GenreTitleFactory`
-- No hay controladores para estas funcionalidades.
-- No hay vistas de usuario ni formularios.
-- No hay rutas protegidas para usuarios autenticados.
-- No hay tests funcionales de estas operaciones.
+- Ya existe `TitleInteractionController` para la ficha, las valoraciones y las reseñas.
+- Ya existe la vista de detalle `resources/views/titles/show.blade.php` con sus formularios.
+- Ya existen rutas protegidas para consultar títulos, guardar valoraciones y gestionar reseñas propias.
+- Todavía faltan los tests funcionales específicos de valoraciones y reseñas.
+
+## Punto alcanzado al cierre de la jornada
+
+- El layout global, la navegación y el diseño responsive están terminados.
+- El catálogo permite buscar por título y aplicar filtros de tipo, género, año, puntuación, director y actor.
+- Las tarjetas del catálogo enlazan con la ficha individual de cada título.
+- La ficha permite valorar del 1 al 10 y actualizar la valoración existente.
+- La ficha permite crear, editar y eliminar reseñas propias.
+- Las reseñas nuevas quedan pendientes de moderación y se muestran las aprobadas.
+- La compilación de Vite, las rutas, la sintaxis PHP y las vistas Blade se han validado correctamente.
+
+### Siguiente sesión
+
+1. Crear los tests funcionales de valoraciones y reseñas.
+2. Implementar comentarios sobre reseñas.
+3. Implementar listas personales: favoritos, pendientes y vistos.
+4. Completar el perfil mostrando valoraciones y reseñas del usuario.
+5. Hacer una prueba completa como usuario y revisar la integración con Adrián.
 
 ## Tareas
 
