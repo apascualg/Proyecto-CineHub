@@ -65,3 +65,36 @@
 | Prompt | Implementa l'autenticació amb registre, inici de sessió, tancament de sessió i autorització per rols en aquest projecte Laravel. Revisa primer l'estructura existent i no permetis que un usuari modifiqui el seu propi rol. |
 | Resultat | Es va implementar i validar l'autenticació, la protecció de rutes i el middleware d'administrador. Els tests es van executar correctament després de corregir la redirecció del perfil, amb 9 tests superats i 33 assertions. |
 | Commit / PR | Enllaç al commit o pull request corresponent |
+
+## Registre 7
+
+| Camp | Contingut |
+|---|---|
+| Data i autor | 2026-11-16 — Eric |
+| Eina | GitHub Copilot |
+| Objectiu | Crear la meva primera versió del layout i dels components visuals de CineHub a partir de les vistes Blade existents i de la proposta visual del logo. |
+| Prompt | El meu company ja ha creat les vistes. Fes una primera versió del layout i dels components de CineHub tenint en compte el logo, amb una capçalera, un buscador, filtres i una graella de pel·lícules i sèries. Fes el CSS sobre les vistes existents. |
+| Resultat | Vaig actualitzar el layout global, la capçalera i la vista del dashboard amb una primera interfície de CineHub. Vaig afegir el sistema visual amb els colors negre, blanc i taronja, el buscador, el panell de filtres, les targetes de contingut i el disseny responsive. Vaig validar correctament la compilació de Vite amb `npm run build`. |
+| Commit / PR | |
+
+## Registre 8
+
+| Camp | Contingut |
+|---|---|
+| Data i autor | 2026-11-16 — Eric |
+| Eina | GitHub Copilot |
+| Objectiu | Fer funcional la meva cerca per títol i els filtres del catàleg. |
+| Prompt | Canvia "Busca avançada" per "Buscar por título" i fes que els filtres siguin funcionals. La cerca ha de buscar pel títol i els filtres han d'incloure tipus, gènere, any des de/fins a, puntuació, director i actor. |
+| Resultat | Vaig crear `CatalogController`, vaig connectar la ruta del dashboard amb una consulta GET i vaig implementar els filtres sobre els models `Title`, `Genre`, `Credit` i `Rating`. La consulta inclou títol original, rang d'anys, puntuació mitjana, director, actor, paginació i conservació dels filtres després de cercar. Vaig validar la ruta amb `php artisan route:list` i la compilació amb `npm run build`. |
+| Commit / PR | |
+
+## Registre 9
+
+| Camp | Contingut |
+|---|---|
+| Data i autor | 2026-11-16 — Eric |
+| Eina | GitHub Copilot |
+| Objectiu | Afegir les meves dades inicials perquè el catàleg mostri contingut quan no s'aplica cap filtre. |
+| Prompt | Si no s'ha aplicat cap filtre, el catàleg hauria de mostrar alguna pel·lícula o sèrie. Comprova la causa i afegeix les dades demo necessàries al seeder. |
+| Resultat | Vaig comprovar que la taula `titles` tenia zero registres. Vaig afegir quatre títols demo publicats, amb tipus, dates i gèneres, al `DatabaseSeeder`. Vaig executar `php artisan db:seed` i vaig verificar que la base de dades contenia quatre títols. |
+| Commit / PR | |
