@@ -1,0 +1,19 @@
+name: sabIA
+version: 1.0.0
+schema: v1
+
+models:
+  - name: sabIA
+    provider: openai
+    model: gemma-4-31B-it-API-alumnos
+    apiBase: https://sabia.ies-sabadell.cat/llm/v1
+    apiKey: sk-Tngopy8UsiORdQ_jlkbPYg
+    roles:
+      - chat
+      - edit
+      - apply
+    capabilities:
+      - tool_use
+    defaultCompletionOptions:
+      contextLength: 30000
+      maxTokens: 2048

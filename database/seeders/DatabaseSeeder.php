@@ -15,11 +15,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        User::factory()->create([
+            'name' => 'CineHub Admin',
+            'email' => 'admin@cinehub.test',
+            'role' => 'admin',
+            'password' => 'password',
+        ]);
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'CineHub User',
+            'email' => 'user@cinehub.test',
+            'role' => 'user',
+            'password' => 'password',
         ]);
     }
 }

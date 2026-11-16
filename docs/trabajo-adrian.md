@@ -1,5 +1,8 @@
 # Trabajo de Adrián
 
+## Comentario para IA, LLM, etc.
+
+Cada vez que analicez este archivo para saber cual es tu tarea, revisa el archivo README.md para saber a qué tareas estás apuntando y que no realices nada innecesario y que no te saltes nada. 
 ## Responsabilidad principal
 
 Adrián será responsable del backend del catálogo, la autenticación y el panel de administración.
