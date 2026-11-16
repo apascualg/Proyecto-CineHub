@@ -28,6 +28,8 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return back()->with('status', 'Perfil actualizado correctamente.');
+        return redirect()
+            ->route('profile.edit')
+            ->with('status', 'Perfil actualizado correctamente.');
     }
 }
