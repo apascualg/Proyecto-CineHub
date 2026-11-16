@@ -134,6 +134,107 @@ select {
     margin: 0 auto 1.5rem;
 }
 
+.auth-card {
+    max-width: 480px;
+    margin: 2rem auto 0;
+    padding: 2.5rem;
+    background: var(--cine-panel);
+    border: 1px solid var(--cine-border);
+    border-radius: 1rem;
+    box-shadow: var(--cine-shadow);
+}
+
+.auth-card__eyebrow {
+    margin: 0 0 0.5rem;
+    color: var(--cine-orange-strong);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.auth-card h1 {
+    margin: 0;
+    color: var(--cine-text);
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    letter-spacing: -0.06em;
+}
+
+.auth-card__intro {
+    margin: 0.75rem 0 2rem;
+    color: var(--cine-gray);
+}
+
+.auth-form {
+    display: grid;
+    gap: 1.1rem;
+}
+
+.auth-form__field {
+    display: grid;
+    gap: 0.45rem;
+}
+
+.auth-form__field label {
+    color: var(--cine-text);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.auth-form__field input {
+    width: 100%;
+    padding: 0.85rem 0.9rem;
+    border: 1px solid var(--cine-border);
+    border-radius: 0.5rem;
+    background: #fff;
+    color: var(--cine-text);
+}
+
+.auth-form__field input:focus {
+    outline: 2px solid rgba(244, 164, 0, 0.35);
+    border-color: var(--cine-orange-strong);
+}
+
+.auth-form__remember {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--cine-gray);
+    font-size: 0.9rem;
+}
+
+.auth-form__remember input {
+    accent-color: var(--cine-orange-strong);
+}
+
+.auth-form__submit {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 0;
+    border-radius: 0.5rem;
+    background: var(--cine-orange);
+    color: #111;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.auth-form__submit:hover {
+    background: var(--cine-orange-strong);
+    transform: translateY(-1px);
+}
+
+.auth-card__footer {
+    margin: 1.75rem 0 0;
+    color: var(--cine-gray);
+    text-align: center;
+}
+
+.auth-card__footer a {
+    color: var(--cine-orange-strong);
+    font-weight: 700;
+}
+
 .catalog-shell {
     background: transparent;
 }
@@ -401,6 +502,11 @@ select {
 }
 
 @media (max-width: 640px) {
+    .auth-card {
+        margin-top: 0;
+        padding: 1.5rem;
+    }
+
     .catalog-search {
         grid-template-columns: 1fr;
     }
