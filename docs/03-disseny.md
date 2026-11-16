@@ -69,3 +69,29 @@ El alias se registra en `bootstrap/app.php`:
 - Las contraseñas se cifran mediante el cast `hashed` del modelo `User`.
 - El logout invalida la sesión y regenera el token CSRF.
 - Las rutas administrativas se protegen en el servidor.
+
+## Factories y datos de demostración
+
+Las factories de `database/factories/` permiten generar datos coherentes para pruebas:
+
+- Usuarios.
+- Títulos.
+- Géneros.
+- Personas.
+- Créditos.
+- Valoraciones.
+- Reseñas.
+- Listas.
+- Títulos de listas.
+- Comentarios.
+- Relaciones entre títulos y géneros.
+
+El `DatabaseSeeder` ejecuta los seeders en este orden:
+
+1. `UsersSeeder`
+2. `CatalogSeeder`
+3. `DemoInteractionsSeeder`
+
+`CatalogSeeder` crea géneros, personas, películas, series y créditos. `DemoInteractionsSeeder` crea valoraciones, reseñas, comentarios y una lista de favoritos.
+
+Los seeders utilizan operaciones como `updateOrCreate`, `firstOrCreate` y `syncWithoutDetaching` para poder ejecutarse varias veces sin duplicar los datos principales.

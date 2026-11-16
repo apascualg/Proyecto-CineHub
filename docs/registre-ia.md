@@ -4,7 +4,7 @@
 
 | Camp | Contingut |
 |---|---|
-| Data i autor | 2026-11-10 — Usuari |
+| Data i autor | 2026-11-10 — Adrián |
 | Eina | GitHub Copilot |
 | Objectiu | Analitzar la proposta de CineHub i crear les bases de dades necessàries per al projecte Laravel. |
 | Prompt | Analiza el archivo `E:\IA\Projecte-Vibecoding\docs\01-proposta.md` y el contenido de la proposta de proyecto y creame las bases de datos necesarias para mi proyecto de Laravel. |
@@ -15,7 +15,7 @@
 
 | Camp | Contingut |
 |---|---|
-| Data i autor | 2026-11-10 — Usuari |
+| Data i autor | 2026-11-10 — Adrián |
 | Eina | GitHub Copilot |
 | Objectiu | Crear totes les taules del projecte amb una migració i un model Eloquent independent per a cada taula. |
 | Prompt | Crea todas estas tablas, pero que no sea una migración para cada una — crea todas las tablas, cada una con su respectivo modelo y con su respectiva migración. |
@@ -26,7 +26,7 @@
 
 | Camp | Contingut |
 |---|---|
-| Data i autor | 2026-11-10 — Usuari |
+| Data i autor | 2026-11-10 — Adrián |
 | Eina | GitHub Copilot |
 | Objectiu | Afegir aquesta interacció al registre viu de prompts del projecte. |
 | Prompt | Ahora añade este registro con mi mensaje y tu respuesta y el llm en este formato en el archivo `E:\IA\Projecte-Vibecoding\docs\registre-ia.md` con estos campos: Data i autor, Eina, Objectiu, Prompt, Resultat i Commit / PR. El commit déjalo vacío. |
@@ -37,7 +37,7 @@
 
 | Camp | Contingut |
 |---|---|
-| Data i autor | 2026-11-16 — Usuari |
+| Data i autor | 2026-11-16 — Adrián |
 | Eina | GitHub Copilot |
 | Objectiu | Analitzar el progrés actual de CineHub i repartir el treball entre dos programadors per evitar conflictes. |
 | Prompt | Analiza el proyecto Laravel a partir del README.md, identifica el progreso actual y organiza el trabajo de dos programadores para que no se pisen y cada uno sepa qué tareas realizar. |
@@ -48,7 +48,7 @@
 
 | Camp | Contingut |
 |---|---|
-| Data i autor | 2026-11-16 — Usuari |
+| Data i autor | 2026-11-16 — Adrián |
 | Eina | GitHub Copilot |
 | Objectiu | Implementar el primer punt del treball d'Adrián: autenticació d'usuaris, rols i autorització d'administradors. |
 | Prompt | Necesito que crees los controladores, las request de validación, el middleware de administrador, las vistas y los tests. Modifica también las rutas, el bootstrap, los seeders y la factory de usuarios, realizando los pasos intermedios necesarios. |
@@ -97,4 +97,16 @@
 | Objectiu | Afegir les meves dades inicials perquè el catàleg mostri contingut quan no s'aplica cap filtre. |
 | Prompt | Si no s'ha aplicat cap filtre, el catàleg hauria de mostrar alguna pel·lícula o sèrie. Comprova la causa i afegeix les dades demo necessàries al seeder. |
 | Resultat | Vaig comprovar que la taula `titles` tenia zero registres. Vaig afegir quatre títols demo publicats, amb tipus, dates i gèneres, al `DatabaseSeeder`. Vaig executar `php artisan db:seed` i vaig verificar que la base de dades contenia quatre títols. |
+| Commit / PR | |
+
+
+## Registre 10
+
+| Camp | Contingut |
+|---|---|
+| Data i autor | 2026-11-16 — Adrián |
+| Eina | GitHub Copilot |
+| Objectiu | Crear les factories i els seeders necessaris per disposar de dades de demostració del catàleg i de les interaccions dels usuaris. |
+| Prompt | Crea todas las factories del proyecto, los seeders necesarios y modifica el DatabaseSeeder para generar usuarios, películas, series, géneros, personas, créditos, valoraciones, reseñas, comentarios y listas de demostración. Haz que el seeding sea repetible y actualiza la documentación del reparto de tareas. |
+| Resultat | Es van crear les factories de tots els models, els seeders d'usuaris, catàleg i interaccions, i es va fer idempotent el seeding. També es van afegir proves específiques; el conjunt d'autenticació, perfil i seeders supera 12 tests amb 56 assertions. |
 | Commit / PR | |

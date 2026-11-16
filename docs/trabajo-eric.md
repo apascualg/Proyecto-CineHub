@@ -8,6 +8,18 @@ Eric será responsable de la interfaz compartida y de las funciones que los usua
 
 - Las tablas de valoraciones, reseñas, comentarios y listas ya existen.
 - Sus modelos Eloquent ya existen en `app/Models/`.
+- Las factories de todos los modelos de dominio deben mantenerse disponibles para crear datos de prueba:
+  - `UserFactory`
+  - `TitleFactory`
+  - `GenreFactory`
+  - `PersonFactory`
+  - `CreditFactory`
+  - `RatingFactory`
+  - `ReviewFactory`
+  - `WatchlistFactory`
+  - `WatchlistTitleFactory`
+  - `CommentFactory`
+  - `GenreTitleFactory`
 - No hay controladores para estas funcionalidades.
 - No hay vistas de usuario ni formularios.
 - No hay rutas protegidas para usuarios autenticados.

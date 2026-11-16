@@ -157,3 +157,28 @@ Se podrá utilizar la API de TMDB para importar datos cinematográficos. En ese 
 - Nunca se incluirá una clave real en commits, issues o documentación pública.
 
 La integración con TMDB será opcional y no constituye una función de inteligencia artificial.
+
+## Datos de demostración
+
+La aplicación incluye seeders para preparar una base de datos local completa. Después de configurar MySQL, ejecutar:
+
+```bash
+php artisan migrate --seed
+```
+
+Si las migraciones ya están ejecutadas:
+
+```bash
+php artisan db:seed
+```
+
+Se crearán usuarios, películas, series, géneros, personas, créditos, valoraciones, reseñas, comentarios y una lista de favoritos.
+
+Las credenciales de demostración son:
+
+| Rol | Email | Contraseña |
+|---|---|---|
+| Administrador | `admin@cinehub.test` | `password` |
+| Usuario | `user@cinehub.test` | `password` |
+
+Estas credenciales solo deben utilizarse en el entorno local.

@@ -49,7 +49,35 @@ Ejecutar:
 php artisan migrate --seed
 ```
 
-El seeder crea usuarios de demostración:
+El seeding crea usuarios y datos de demostración del catálogo:
+
+- 2 usuarios.
+- 8 géneros.
+- 10 personas.
+- 8 películas y series.
+- Créditos de directores, creadores y actores.
+- 4 valoraciones.
+- 1 reseña.
+- 1 comentario.
+- 1 lista de favoritos con 3 contenidos.
+
+Si las migraciones ya están ejecutadas, se puede ejecutar solo el seeder:
+
+```bash
+php artisan db:seed
+```
+
+Los seeders son repetibles y no deberían duplicar los datos principales.
+
+Para reiniciar completamente la base de datos local:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+> Este comando elimina todas las tablas y datos existentes. Solo debe utilizarse en desarrollo.
+
+El seeder crea estos usuarios de demostración:
 
 | Rol | Email | Contraseña |
 |---|---|---|
@@ -70,7 +98,7 @@ La aplicación estará disponible normalmente en `http://127.0.0.1:8000`.
 ## Ejecutar los tests
 
 ```bash
-php artisan test tests/Feature/Auth tests/Feature/Profile
+php artisan test tests/Feature/Auth tests/Feature/Profile tests/Feature/Database
 ```
 
 Los tests actuales utilizan SQLite en memoria según `phpunit.xml`. Para ejecutarlos hay que habilitar `pdo_sqlite` o cambiar PHPUnit a una base de datos MySQL exclusiva para pruebas.

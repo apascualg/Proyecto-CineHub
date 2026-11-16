@@ -3,7 +3,7 @@
 ## Comando utilizado
 
 ```bash
-php artisan test tests/Feature/Auth tests/Feature/Profile
+php artisan test tests/Feature/Auth tests/Feature/Profile tests/Feature/Database
 ```
 
 ## Tests implementados
@@ -29,16 +29,25 @@ php artisan test tests/Feature/Auth tests/Feature/Profile
 - Un usuario puede actualizar su nombre y email.
 - No se permiten emails duplicados.
 
+### Seeders y datos de demostración
+
+- Se crean los usuarios de demostración.
+- Se crean géneros, personas y títulos.
+- Se crean créditos de directores, creadores y actores.
+- Se crean valoraciones, reseñas, comentarios y listas.
+- Las relaciones entre títulos, géneros y personas son correctas.
+- El seeder puede ejecutarse dos veces sin duplicar datos.
+
 ## Resultado actual
 
-Última ejecución:
+Última ejecución del conjunto de autenticación, perfil y seeders:
 
 ```text
-9 tests passed
-33 assertions
+12 tests passed
+56 assertions
 ```
 
-La ejecución se realizó correctamente después de corregir la redirección del controlador de perfil para utilizar explícitamente la ruta `profile.edit`.
+La ejecución incluye las pruebas de autenticación, perfil, autorización y datos de demostración. También se verificó que el seeder puede ejecutarse dos veces sin duplicar registros.
 
 ## Validaciones adicionales
 

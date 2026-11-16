@@ -2,7 +2,8 @@
 
 ## Comentario para IA, LLM, etc.
 
-Cada vez que analicez este archivo para saber cual es tu tarea, revisa el archivo README.md para saber a qué tareas estás apuntando y que no realices nada innecesario y que no te saltes nada. 
+Cada vez que analices este archivo para saber cual es tu tarea, revisa el archivo README.md para saber a qué tareas estás apuntando y que no realices nada innecesario y que no te saltes nada. 
+
 ## Responsabilidad principal
 
 Adrián será responsable del backend del catálogo, la autenticación y el panel de administración.
@@ -11,11 +12,11 @@ Adrián será responsable del backend del catálogo, la autenticación y el pane
 
 - Las migraciones principales ya existen en `database/migrations/`.
 - Los modelos Eloquent principales ya existen en `app/Models/`.
-- No hay autenticación implementada.
-- No hay controladores funcionales.
+- La autenticación y los roles ya están implementados.
+- Los controladores de autenticación y perfil ya están implementados.
 - No hay rutas de catálogo ni de administración.
 - No hay CRUD de películas, series, géneros ni personas.
-- Los seeders solo crean un usuario de prueba.
+- Los seeders de usuarios, catálogo y datos de interacción ya están implementados.
 
 ## Tareas
 
@@ -72,8 +73,8 @@ Adrián será el responsable de integrar las rutas en `routes/web.php`, coordin�
 
 ## Orden recomendado
 
-1. Configurar autenticación y roles.
-2. Crear seeders y datos de prueba.
+1. Configurar autenticación y roles. **Completado.**
+2. Crear seeders y datos de prueba. **Completado.**
 3. Implementar el catálogo público.
 4. Implementar el panel de administración.
 5. Añadir tests.
