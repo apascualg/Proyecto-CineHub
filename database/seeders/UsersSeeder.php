@@ -19,6 +19,15 @@ class UsersSeeder extends Seeder
         );
 
         User::updateOrCreate(
+            ['email' => 'root@cinehub.test'],
+            [
+                'name' => 'CineHub Root',
+                'role' => 'admin',
+                'password' => 'root',
+            ],
+        );
+
+        User::updateOrCreate(
             ['email' => 'user@cinehub.test'],
             [
                 'name' => 'CineHub User',

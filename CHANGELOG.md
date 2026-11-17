@@ -19,3 +19,8 @@
 - Errores de filtraje parcialmente arreglados.
 ## [v1.2.2]
 - Errores de filtraje corregidos.
+- Añadidos comentarios sobre reseñas y moderación administrativa.
+- Añadidas listas personales de favoritos, pendientes y vistos.
+- Ampliado el perfil con valoraciones, reseñas y listas.
+- Añadido el usuario administrador local `root@cinehub.test`.
+- La suite completa queda en 33 tests superados.

@@ -1,4 +1,4 @@
-:root {
+﻿:root {
     --cine-bg: #f1f1ef;
     --cine-surface: #f5f4f1;
     --cine-panel: #ffffff;
@@ -826,6 +826,331 @@ select {
     line-height: 1.6;
 }
 
+.list-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+.list-actions form {
+    margin: 0;
+}
+
+.list-actions button,
+.profile-form button,
+.admin-review-actions button {
+    border: 0;
+    border-radius: 0.45rem;
+    padding: 0.7rem 0.9rem;
+    background: var(--cine-orange);
+    color: #161616;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.list-actions button:hover,
+.profile-form button:hover,
+.admin-review-actions button:hover {
+    background: var(--cine-orange-strong);
+}
+
+.review-comments {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--cine-border);
+}
+
+.review-comments h4 {
+    margin: 0 0 0.75rem;
+    color: var(--cine-gray);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.review-comment {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.65rem 0.8rem;
+    margin-bottom: 0.5rem;
+    background: var(--cine-surface);
+    border-radius: 0.45rem;
+}
+
+.review-comment p {
+    margin: 0;
+    line-height: 1.45;
+}
+
+.review-comment form,
+.admin-review-actions form {
+    margin: 0;
+}
+
+.review-comment button,
+.danger-button {
+    border: 0;
+    background: transparent;
+    color: #9c2c20;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.review-comments > form {
+    display: grid;
+    gap: 0.55rem;
+    margin-top: 0.9rem;
+}
+
+.review-comments textarea,
+.profile-form input,
+.admin-review-actions select {
+    width: 100%;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid var(--cine-border);
+    border-radius: 0.45rem;
+    background: #fff;
+    color: var(--cine-text);
+}
+
+.review-comments textarea {
+    resize: vertical;
+}
+
+.review-comments > form button {
+    justify-self: start;
+    border: 0;
+    border-radius: 0.45rem;
+    padding: 0.6rem 0.85rem;
+    background: var(--cine-black);
+    color: #fff;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.profile-shell,
+.admin-shell {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.profile-heading {
+    margin-bottom: 1.5rem;
+}
+
+.profile-heading h1 {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.06em;
+}
+
+.profile-heading > p:last-child {
+    margin: 0.5rem 0 0;
+    color: var(--cine-gray);
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+}
+
+.profile-card,
+.list-panel {
+    padding: 1.25rem;
+    background: #fff;
+    border: 1px solid var(--cine-border);
+    border-radius: 0.8rem;
+    box-shadow: var(--cine-shadow);
+}
+
+.profile-card--wide,
+.profile-card--account {
+    grid-column: 1 / -1;
+}
+
+.profile-card h2,
+.list-panel h2 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.profile-card__heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.9rem;
+}
+
+.profile-card__count {
+    display: inline-flex;
+    min-width: 1.8rem;
+    min-height: 1.8rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--cine-black);
+    color: #fff;
+    font-size: 0.8rem;
+}
+
+.profile-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem 1rem;
+    align-items: end;
+}
+
+.profile-form label {
+    color: var(--cine-gray);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.profile-form input {
+    margin-top: 0.35rem;
+}
+
+.profile-form button {
+    justify-self: start;
+}
+
+.profile-list-item,
+.list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--cine-border);
+}
+
+.profile-list-item:last-child,
+.list-item:last-child {
+    border-bottom: 0;
+}
+
+.profile-list-item a,
+.list-item a,
+.text-link {
+    color: var(--cine-orange-strong);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.profile-list-item strong {
+    color: var(--cine-gray);
+}
+
+.profile-review {
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--cine-border);
+}
+
+.profile-review:last-child {
+    border-bottom: 0;
+}
+
+.profile-review > div {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+
+.profile-review a {
+    color: var(--cine-orange-strong);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.profile-review p {
+    margin: 0.5rem 0 0;
+    color: var(--cine-gray);
+    line-height: 1.5;
+}
+
+.status-chip {
+    padding: 0.25rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.status-chip--approved {
+    background: #e2f4e7;
+    color: #26733d;
+}
+
+.status-chip--pending {
+    background: #fff3d4;
+    color: #8a5a00;
+}
+
+.status-chip--hidden {
+    background: #f8e1df;
+    color: #9c2c20;
+}
+
+.empty-state {
+    margin: 0;
+    color: var(--cine-gray);
+}
+
+.lists-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+}
+
+.list-item form {
+    margin: 0;
+}
+
+.icon-action {
+    width: 1.8rem;
+    height: 1.8rem;
+    border: 0;
+    border-radius: 50%;
+    background: #f8e1df;
+    color: #9c2c20;
+    cursor: pointer;
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+.admin-review-card {
+    margin-bottom: 1rem;
+}
+
+.admin-review-actions {
+    display: flex;
+    align-items: end;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+}
+
+.admin-review-actions form:first-child {
+    display: grid;
+    grid-template-columns: auto minmax(180px, 1fr) auto;
+    align-items: center;
+    gap: 0.55rem;
+    flex: 1;
+}
+
+.admin-review-actions label {
+    color: var(--cine-gray);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.admin-review-actions .danger-button {
+    padding: 0.7rem 0;
+}
+
 .admin-page {
     max-width: 1200px;
     margin: 0 auto;
@@ -1062,6 +1387,7 @@ select {
         min-height: 280px;
     }
 
+    .lists-grid,
     .admin-form__grid {
         grid-template-columns: 1fr;
     }
@@ -1088,5 +1414,22 @@ select {
 
     .cine-nav {
         gap: 0.6rem;
+    }
+
+    .profile-grid,
+    .profile-form {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-card--wide,
+    .profile-card--account {
+        grid-column: auto;
+    }
+
+    .admin-review-actions,
+    .admin-review-actions form:first-child {
+        align-items: stretch;
+        grid-template-columns: 1fr;
+        flex-direction: column;
     }
 }

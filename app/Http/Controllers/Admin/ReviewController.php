@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdateReviewRequest;
 use App\Models\Review;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class ReviewController extends Controller
@@ -22,6 +23,18 @@ class ReviewController extends Controller
         $review->update($request->validated());
 
         return back()->with('status', 'Estado de la reseña actualizado correctamente.');
+    }
+
+    public function updateStatus(Request $request, Review $review): RedirectResponse
+    {
+        $validated = $request->validate([
+            'status' => ['required', 'in:approved,hidden,pending'],
+        ]);
+
+        $review->update(['status' => $validated['status']]);
+
+        return redirect()->route('admin.reviews.index')
+            ->with('status', 'El estado de la reseña se ha actualizado.');
     }
 
     public function destroy(Review $review): RedirectResponse

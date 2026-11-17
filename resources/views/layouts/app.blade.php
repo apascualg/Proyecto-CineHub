@@ -17,8 +17,10 @@
                     @auth
                         <a href="{{ route('dashboard') }}">Inicio</a>
                         <a href="{{ route('profile.edit') }}">Perfil</a>
+                        <a href="{{ route('lists.index') }}">Mis listas</a>
                         @if (auth()->user()->isAdmin())
                             <a href="{{ route('admin.dashboard') }}">Administración</a>
+                            <a href="{{ route('admin.reviews.index') }}">Reseñas</a>
                         @endif
                         <form method="POST" action="{{ route('logout') }}" class="cine-nav__logout">
                             @csrf

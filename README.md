@@ -179,6 +179,7 @@ Las credenciales de demostración son:
 | Rol | Email | Contraseña |
 |---|---|---|
 | Administrador | `admin@cinehub.test` | `password` |
+| Administrador root | `root@cinehub.test` | `root` |
 | Usuario | `user@cinehub.test` | `password` |
 
 Estas credenciales solo deben utilizarse en el entorno local.

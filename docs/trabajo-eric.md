@@ -23,7 +23,7 @@ Eric será responsable de la interfaz compartida y de las funciones que los usua
 - Ya existe `TitleInteractionController` para la ficha, las valoraciones y las reseñas.
 - Ya existe la vista de detalle `resources/views/titles/show.blade.php` con sus formularios.
 - Ya existen rutas protegidas para consultar títulos, guardar valoraciones y gestionar reseñas propias.
-- Todavía faltan los tests funcionales específicos de valoraciones y reseñas.
+- Ya existen tests funcionales específicos de valoraciones y reseñas en `tests/Feature/User/TitleInteractionTest.php`.
 
 ## Punto alcanzado al cierre de la jornada
 
@@ -33,15 +33,16 @@ Eric será responsable de la interfaz compartida y de las funciones que los usua
 - La ficha permite valorar del 1 al 10 y actualizar la valoración existente.
 - La ficha permite crear, editar y eliminar reseñas propias.
 - Las reseñas nuevas quedan pendientes de moderación y se muestran las aprobadas.
+- Las valoraciones y reseñas tienen cobertura funcional de creación, actualización, eliminación, validación, permisos y moderación.
+- Los usuarios pueden gestionar listas de favoritos, pendientes y vistos sin duplicar títulos.
+- El perfil muestra las valoraciones, reseñas y listas personales del usuario.
 - La compilación de Vite, las rutas, la sintaxis PHP y las vistas Blade se han validado correctamente.
 
-### Siguiente sesión
+### Cierre de la parte de Eric
 
-1. Crear los tests funcionales de valoraciones y reseñas.
-2. Implementar comentarios sobre reseñas.
-3. Implementar listas personales: favoritos, pendientes y vistos.
-4. Completar el perfil mostrando valoraciones y reseñas del usuario.
-5. Hacer una prueba completa como usuario y revisar la integración con Adrián.
+- Se completó la prueba de integración de las funciones de usuario.
+- La suite completa, las rutas, las vistas Blade y la compilación frontend están validadas.
+- Queda pendiente únicamente la integración final del equipo y la entrega del proyecto.
 
 ## Tareas
 
@@ -75,16 +76,16 @@ Eric será responsable de la interfaz compartida y de las funciones que los usua
 
 ### 5. Listas personales
 
-- Implementar favoritos, pendientes y vistos.
+- Implementar favoritos, pendientes y vistos. **Completado.**
 - Permitir listas personalizadas si el tiempo lo permite.
-- Evitar que un contenido aparezca duplicado en una misma lista.
-- Permitir consultar y modificar las listas del usuario.
+- Evitar que un contenido aparezca duplicado en una misma lista. **Completado.**
+- Permitir consultar y modificar las listas del usuario. **Completado.**
 
 ### 6. Perfil y pruebas
 
-- Mostrar las reseñas y valoraciones realizadas por el usuario.
-- Mostrar sus listas personales.
-- Crear tests de valoraciones, reseñas, comentarios, listas y permisos.
+- Mostrar las reseñas y valoraciones realizadas por el usuario. **Completado.**
+- Mostrar sus listas personales. **Completado.**
+- Crear tests de valoraciones, reseñas, comentarios, listas y permisos. **Completado para las funcionalidades implementadas.**
 
 ## Archivos y carpetas bajo su responsabilidad
 

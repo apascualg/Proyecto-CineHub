@@ -2,7 +2,11 @@
 
 namespace Tests\Feature\Profile;
 
+use App\Models\Rating;
+use App\Models\Review;
+use App\Models\Title;
 use App\Models\User;
+use App\Models\Watchlist;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -46,5 +50,35 @@ class ProfileTest extends TestCase
             ])
             ->assertRedirect(route('profile.edit'))
             ->assertSessionHasErrors('email');
+    }
+
+    public function test_profile_shows_the_users_ratings_reviews_and_lists(): void
+    {
+        $user = User::factory()->create();
+        $title = Title::factory()->published()->create(['title' => 'Título del perfil']);
+
+        Rating::factory()->create([
+            'user_id' => $user->id,
+            'title_id' => $title->id,
+            'score' => 8,
+        ]);
+        Review::factory()->approved()->create([
+            'user_id' => $user->id,
+            'title_id' => $title->id,
+            'body' => 'Una reseña visible desde el perfil.',
+        ]);
+        $watchlist = Watchlist::factory()->create([
+            'user_id' => $user->id,
+            'type' => 'favorites',
+            'name' => 'Favoritos',
+        ]);
+        $watchlist->titles()->attach($title);
+
+        $this->actingAs($user)
+            ->get(route('profile.edit'))
+            ->assertOk()
+            ->assertSee('Título del perfil')
+            ->assertSee('Una reseña visible desde el perfil.')
+            ->assertSee('Favoritos');
     }
 }

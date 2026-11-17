@@ -137,6 +137,36 @@
 
 | Camp | Contingut |
 |---|---|
+| Data i autor | 2026-11-17 — Eric |
+| Eina | GitHub Copilot |
+| Objectiu | Afegir proves funcionals per validar les valoracions i les ressenyes de CineHub. |
+| Prompt | Vale, haz lo siguiente que toca: implementa los tests funcionales de valoraciones y reseñas, revisa qué parte corresponde a Eric y valida que no se rompa el resto del proyecto. |
+| Resultat | Es va crear `tests/Feature/User/TitleInteractionTest.php` amb proves per crear i actualitzar valoracions sense duplicats, validar puntuacions, gestionar el cicle complet de les ressenyes, comprovar permisos i verificar la visibilitat segons l'estat de moderació. La suite específica va superar 6 tests i la suite completa 24 tests amb 98 assertions. |
+| Commit / PR | |
+
+## Registre 14
+
+| Camp | Contingut |
+|---|---|
+| Data i autor | 2026-11-17 — Eric |
+| Eina | GitHub Copilot |
+| Objectiu | Implementar les llistes personals i completar el perfil amb les interaccions de l'usuari. |
+| Prompt | Vale, seguimos con implementar las listas personales, hacemos el perfil más completo y terminamos con el perfil y las pruebas. |
+| Resultat | Es va implementar la gestió de llistes de favorits, pendents i vistos, amb control de duplicats, consulta i eliminació. El perfil ara mostra les valoracions, ressenyes i llistes de l'usuari. També es van afegir proves de llistes i perfil, i la suite completa queda validada. |
+| Commit / PR | |
+
+## Registre 15
+
+| Camp | Contingut |
+|---|---|
+| Data i autor | 2026-11-17 — Eric |
+| Eina | GitHub Copilot |
+| Objectiu | Fer la revisió final d'integració de les funcionalitats d'usuari abans de l'entrega. |
+| Prompt | Vale, vamos a por el último apartado: revisa la integración completa, ejecuta las pruebas y valida que la aplicación esté preparada para entregar. |
+| Resultat | Es van validar 33 tests amb 132 assertions, les 26 rutes de l'aplicació, la compilació de les vistes Blade i la build de Vite. La part d'Eric queda integrada i només falta la revisió final conjunta i l'entrega del projecte. |
+
+## Registre 16
+
 | Data i autor | 2026-11-17 — Adrián |
 | Eina | GitHub Copilot |
 | Objectiu | Afegir el repartiment principal a les pàgines de detall de pel·lícules i sèries. |

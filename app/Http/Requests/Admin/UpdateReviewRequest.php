@@ -15,7 +15,7 @@ class UpdateReviewRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => ['required', Rule::in(['pending', 'approved', 'rejected'])],
+            'status' => ['required', Rule::in(['pending', 'approved', 'hidden', 'rejected'])],
         ];
     }
 }
