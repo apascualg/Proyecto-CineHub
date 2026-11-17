@@ -4,6 +4,13 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\CreditController;
+use App\Http\Controllers\Admin\GenreController;
+use App\Http\Controllers\Admin\PersonController;
+use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\TitleController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\User\TitleInteractionController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,8 +54,15 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'admin'])
     ->prefix('admin')
+    ->name('admin.')
     ->group(function () {
-        Route::get('/', function () {
-            return view('admin.dashboard');
-        })->name('admin.dashboard');
+        Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+        Route::resource('titles', TitleController::class)->except('show');
+        Route::patch('titles/{title}/toggle-status', [TitleController::class, 'toggleStatus'])
+            ->name('titles.toggle-status');
+        Route::resource('genres', GenreController::class)->except('show');
+        Route::resource('people', PersonController::class)->except('show');
+        Route::resource('credits', CreditController::class)->except('show');
+        Route::resource('users', UserController::class)->only(['index', 'edit', 'update']);
+        Route::resource('reviews', ReviewController::class)->only(['index', 'update', 'destroy']);
     });

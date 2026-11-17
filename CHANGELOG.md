@@ -17,3 +17,5 @@
 - Añadidas pruebas específicas para los seeders.
 ## [v1.2.1]
 - Errores de filtraje parcialmente arreglados.
+## [v1.2.2]
+- Errores de filtraje corregidos.
