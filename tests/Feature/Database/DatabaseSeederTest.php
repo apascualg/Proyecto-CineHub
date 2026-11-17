@@ -21,6 +21,10 @@ class DatabaseSeederTest extends TestCase
             'role' => 'admin',
         ]);
         $this->assertDatabaseHas('users', [
+            'email' => 'root@cinehub.test',
+            'role' => 'admin',
+        ]);
+        $this->assertDatabaseHas('users', [
             'email' => 'user@cinehub.test',
             'role' => 'user',
         ]);
@@ -40,7 +44,7 @@ class DatabaseSeederTest extends TestCase
         $this->seed();
         $this->seed();
 
-        $this->assertDatabaseCount('users', 2);
+        $this->assertDatabaseCount('users', 3);
         $this->assertDatabaseCount('titles', 8);
         $this->assertDatabaseCount('ratings', 4);
         $this->assertDatabaseCount('reviews', 1);

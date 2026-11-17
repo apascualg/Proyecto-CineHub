@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use App\Models\Review;
 use App\Models\Title;
 use Illuminate\Http\RedirectResponse;
@@ -21,7 +22,7 @@ class TitleInteractionController extends Controller
             ->loadCount('ratings');
 
         $reviews = $title->reviews()
-            ->with('user')
+            ->with(['user', 'comments.user'])
             ->where(function ($query): void {
                 $query->where('status', 'approved')
                     ->orWhere('user_id', Auth::id());
@@ -38,7 +39,14 @@ class TitleInteractionController extends Controller
             ->latest()
             ->first();
 
-        return view('titles.show', compact('title', 'reviews', 'userRating', 'userReview'));
+        $userLists = Auth::user()
+            ->watchlists()
+            ->whereIn('type', ['favorites', 'pending', 'watched'])
+            ->with('titles')
+            ->get()
+            ->keyBy('type');
+
+        return view('titles.show', compact('title', 'reviews', 'userRating', 'userReview', 'userLists'));
     }
 
     public function storeRating(Request $request, Title $title): RedirectResponse
@@ -104,5 +112,36 @@ class TitleInteractionController extends Controller
 
         return redirect()->route('titles.show', $title)
             ->with('status', 'Tu reseña se ha eliminado correctamente.');
+    }
+
+    public function storeComment(Request $request, Review $review): RedirectResponse
+    {
+        abort_unless(
+            $review->status === 'approved' || $review->user_id === Auth::id(),
+            404,
+        );
+
+        $validated = $request->validate([
+            'body' => ['required', 'string', 'min:2', 'max:1000'],
+        ]);
+
+        $review->comments()->create([
+            'user_id' => Auth::id(),
+            'body' => $validated['body'],
+        ]);
+
+        return redirect()->route('titles.show', $review->title)
+            ->with('status', 'Tu comentario se ha publicado correctamente.');
+    }
+
+    public function destroyComment(Comment $comment): RedirectResponse
+    {
+        abort_unless($comment->user_id === Auth::id(), 403);
+
+        $title = $comment->review->title;
+        $comment->delete();
+
+        return redirect()->route('titles.show', $title)
+            ->with('status', 'Tu comentario se ha eliminado correctamente.');
     }
 }

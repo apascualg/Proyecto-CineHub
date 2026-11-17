@@ -17,3 +17,8 @@
 - Añadidas pruebas específicas para los seeders.
 ## [v1.2.1]
 - Errores de filtraje parcialmente arreglados.
+- Añadidos comentarios sobre reseñas y moderación administrativa.
+- Añadidas listas personales de favoritos, pendientes y vistos.
+- Ampliado el perfil con valoraciones, reseñas y listas.
+- Añadido el usuario administrador local `root@cinehub.test`.
+- La suite completa queda en 33 tests superados.

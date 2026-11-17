@@ -12,8 +12,14 @@ class ProfileController extends Controller
 {
     public function edit(): View
     {
+        $user = Auth::user()->load([
+            'ratings.title',
+            'reviews.title',
+            'watchlists.titles',
+        ]);
+
         return view('profile.edit', [
-            'user' => Auth::user(),
+            'user' => $user,
         ]);
     }
 

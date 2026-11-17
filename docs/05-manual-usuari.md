@@ -60,6 +60,7 @@ Las funcionalidades del catálogo administrativo se incorporarán en las siguien
 | Rol | Email | Contraseña |
 |---|---|---|
 | Administrador | `admin@cinehub.test` | `password` |
+| Administrador root | `root@cinehub.test` | `root` |
 | Usuario | `user@cinehub.test` | `password` |
 
 Estas credenciales no deben utilizarse fuera del entorno local.

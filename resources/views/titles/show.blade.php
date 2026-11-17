@@ -58,10 +58,38 @@
                         @method('DELETE')
                         <button type="submit">Eliminar mi reseña</button>
                     </form>
-                    <p class="review-status">Estado: {{ $userReview->status === 'approved' ? 'publicada' : 'pendiente de moderación' }}</p>
+                    <p class="review-status">
+                        Estado:
+                        {{ [
+                            'approved' => 'publicada',
+                            'pending' => 'pendiente de moderación',
+                            'hidden' => 'oculta',
+                        ][$userReview->status] ?? 'desconocido' }}
+                    </p>
                 @endif
             </section>
         </div>
+
+        <section class="interaction-panel">
+            <h2>Mis listas</h2>
+            <div class="list-actions">
+                @foreach ([
+                    'favorites' => 'Favoritos',
+                    'pending' => 'Pendientes',
+                    'watched' => 'Vistos',
+                ] as $type => $label)
+                    @php($inList = $userLists->get($type)?->titles->contains($title) ?? false)
+                    <form method="POST" action="{{ $inList ? route('lists.destroy', $title) : route('lists.store', $title) }}">
+                        @csrf
+                        @if ($inList)
+                            @method('DELETE')
+                        @endif
+                        <input type="hidden" name="type" value="{{ $type }}">
+                        <button type="submit">{{ $inList ? 'Quitar de' : 'Añadir a' }} {{ $label }}</button>
+                    </form>
+                @endforeach
+            </div>
+        </section>
 
         <section class="reviews-section">
             <div class="reviews-section__heading">
@@ -77,10 +105,33 @@
                             <p>Por {{ $review->user->name }} · {{ $review->created_at->format('d/m/Y') }}</p>
                         </div>
                         @if ($review->status !== 'approved')
-                            <span class="review-status">Pendiente</span>
+                            <span class="review-status">
+                                {{ $review->status === 'hidden' ? 'Oculta' : 'Pendiente de moderación' }}
+                            </span>
                         @endif
                     </div>
                     <p>{{ $review->body }}</p>
+                    <div class="review-comments">
+                        <h4>Comentarios</h4>
+                        @foreach ($review->comments as $comment)
+                            <div class="review-comment">
+                                <p><strong>{{ $comment->user->name }}</strong>: {{ $comment->body }}</p>
+                                @if ($comment->user_id === auth()->id())
+                                    <form method="POST" action="{{ route('comments.destroy', $comment) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit">Eliminar</button>
+                                    </form>
+                                @endif
+                            </div>
+                        @endforeach
+                        <form method="POST" action="{{ route('reviews.comments.store', $review) }}">
+                            @csrf
+                            <label for="comment-{{ $review->id }}">Añadir comentario</label>
+                            <textarea id="comment-{{ $review->id }}" name="body" rows="2" minlength="2" maxlength="1000" required></textarea>
+                            <button type="submit">Comentar</button>
+                        </form>
+                    </div>
                 </article>
             @empty
                 <p class="catalog-empty">Todavía no hay reseñas aprobadas para este título.</p>

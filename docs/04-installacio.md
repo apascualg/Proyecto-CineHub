@@ -82,6 +82,7 @@ El seeder crea estos usuarios de demostración:
 | Rol | Email | Contraseña |
 |---|---|---|
 | Administrador | `admin@cinehub.test` | `password` |
+| Administrador root | `root@cinehub.test` | `root` |
 | Usuario | `user@cinehub.test` | `password` |
 
 Estas credenciales son únicamente para desarrollo local y demostración.

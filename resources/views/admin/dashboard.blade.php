@@ -3,4 +3,5 @@
 @section('content')
     <h1>Panel de administración</h1>
     <p>Esta sección solo está disponible para administradores.</p>
+    <p><a href="{{ route('admin.reviews.index') }}">Gestionar reseñas</a></p>
 @endsection
