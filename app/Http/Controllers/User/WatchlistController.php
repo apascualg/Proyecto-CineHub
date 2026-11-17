@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Title;
+use App\Models\Watchlist;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,13 +22,13 @@ class WatchlistController extends Controller
     {
         $watchlists = Auth::user()
             ->watchlists()
-            ->whereIn('type', array_keys(self::TYPES))
             ->with('titles')
             ->get()
             ->keyBy('type');
 
         return view('profile.lists', [
-            'watchlists' => $watchlists,
+            'watchlists' => $watchlists->filter(fn (Watchlist $watchlist): bool => $watchlist->type !== 'custom'),
+            'customWatchlists' => $watchlists->filter(fn (Watchlist $watchlist): bool => $watchlist->type === 'custom'),
             'listNames' => self::TYPES,
         ]);
     }
@@ -37,17 +38,11 @@ class WatchlistController extends Controller
         abort_unless($title->status === 'published', 404);
 
         $validated = $request->validate([
-            'type' => ['required', 'in:'.implode(',', array_keys(self::TYPES))],
+            'type' => ['nullable', 'in:'.implode(',', array_keys(self::TYPES))],
+            'watchlist_id' => ['nullable', 'integer'],
         ]);
 
-        $watchlist = Auth::user()->watchlists()->firstOrCreate(
-            ['type' => $validated['type']],
-            [
-                'name' => self::TYPES[$validated['type']],
-                'description' => 'Lista personal de '.strtolower(self::TYPES[$validated['type']]).'.',
-                'is_public' => false,
-            ],
-        );
+        $watchlist = $this->resolveWatchlist($validated);
 
         $watchlist->titles()->syncWithoutDetaching([$title->id]);
 
@@ -60,16 +55,61 @@ class WatchlistController extends Controller
         abort_unless($title->status === 'published', 404);
 
         $validated = $request->validate([
-            'type' => ['required', 'in:'.implode(',', array_keys(self::TYPES))],
+            'type' => ['nullable', 'in:'.implode(',', array_keys(self::TYPES))],
+            'watchlist_id' => ['nullable', 'integer'],
         ]);
 
-        Auth::user()
-            ->watchlists()
-            ->where('type', $validated['type'])
-            ->first()?->titles()
-            ->detach($title->id);
+        $this->resolveWatchlist($validated)->titles()->detach($title->id);
 
         return redirect()->route('titles.show', $title)
             ->with('status', 'El título se ha eliminado de tu lista.');
+    }
+
+    public function storeCustom(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:100'],
+            'description' => ['nullable', 'string', 'max:500'],
+        ]);
+
+        Auth::user()->watchlists()->create([
+            ...$validated,
+            'type' => 'custom',
+            'is_public' => false,
+        ]);
+
+        return redirect()->route('lists.index')
+            ->with('status', 'La lista personalizada se ha creado correctamente.');
+    }
+
+    public function destroyList(Watchlist $watchlist): RedirectResponse
+    {
+        abort_unless($watchlist->user_id === Auth::id() && $watchlist->type === 'custom', 403);
+
+        $watchlist->delete();
+
+        return redirect()->route('lists.index')
+            ->with('status', 'La lista personalizada se ha eliminado.');
+    }
+
+    private function resolveWatchlist(array $validated): Watchlist
+    {
+        if ($validated['watchlist_id'] ?? null) {
+            return Auth::user()->watchlists()
+                ->whereKey($validated['watchlist_id'])
+                ->where('type', 'custom')
+                ->firstOrFail();
+        }
+
+        abort_unless($validated['type'] ?? null, 422);
+
+        return Auth::user()->watchlists()->firstOrCreate(
+            ['type' => $validated['type']],
+            [
+                'name' => self::TYPES[$validated['type']],
+                'description' => 'Lista personal de '.strtolower(self::TYPES[$validated['type']]).'.',
+                'is_public' => false,
+            ],
+        );
     }
 }

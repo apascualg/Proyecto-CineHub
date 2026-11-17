@@ -259,6 +259,23 @@ select {
     color: var(--cine-text);
 }
 
+.surprise-button {
+    display: inline-flex;
+    margin-top: 0.9rem;
+    padding: 0.7rem 1rem;
+    border-radius: 0.5rem;
+    background: var(--cine-orange);
+    color: #161616;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.surprise-button:hover {
+    background: var(--cine-orange-strong);
+    transform: translateY(-1px);
+}
+
 .catalog-toolbar {
     background: #dfe0dd;
     border: 1px solid var(--cine-border);
@@ -997,6 +1014,35 @@ select {
     font-size: 0.8rem;
 }
 
+.profile-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+
+.profile-stats > div {
+    display: grid;
+    gap: 0.25rem;
+    padding: 1rem;
+    background: var(--cine-black);
+    border-radius: 0.8rem;
+    color: #fff;
+}
+
+.profile-stats strong {
+    color: var(--cine-orange);
+    font-size: 1.8rem;
+}
+
+.profile-stats span {
+    color: #c9c9c9;
+    font-size: 0.82rem;
+}
+
 .profile-form {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1360,6 +1406,78 @@ select {
     color: #8e271d;
 }
 
+.list-description {
+    margin: -0.3rem 0 0.8rem;
+    color: var(--cine-gray);
+    font-size: 0.9rem;
+}
+
+.custom-list-creator {
+    margin-top: 1.25rem;
+}
+
+.custom-list-form {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr auto;
+    gap: 0.65rem;
+}
+
+.custom-list-form input,
+.custom-list-add select {
+    width: 100%;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid var(--cine-border);
+    border-radius: 0.45rem;
+    background: #fff;
+    color: var(--cine-text);
+}
+
+.custom-list-form button,
+.custom-list-add button,
+.admin-review-filter button {
+    border: 0;
+    border-radius: 0.45rem;
+    padding: 0.7rem 0.9rem;
+    background: var(--cine-orange);
+    color: #161616;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.custom-list-delete {
+    margin-top: 0.8rem;
+}
+
+.custom-list-add {
+    display: grid;
+    grid-template-columns: auto minmax(180px, 1fr) auto;
+    align-items: center;
+    gap: 0.65rem;
+    margin-top: 1rem;
+}
+
+.custom-list-add label,
+.admin-review-filter label {
+    color: var(--cine-gray);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.admin-review-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 1rem;
+}
+
+.admin-review-filter select {
+    max-width: 240px;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid var(--cine-border);
+    border-radius: 0.45rem;
+    background: #fff;
+}
+
 @media (max-width: 900px) {
     .cine-header__inner {
         flex-direction: column;
@@ -1391,6 +1509,10 @@ select {
     .admin-form__grid {
         grid-template-columns: 1fr;
     }
+
+    .profile-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 @media (max-width: 640px) {
@@ -1419,6 +1541,15 @@ select {
     .profile-grid,
     .profile-form {
         grid-template-columns: 1fr;
+    }
+
+    .profile-stats,
+    .custom-list-form,
+    .custom-list-add,
+    .admin-review-filter {
+        grid-template-columns: 1fr;
+        align-items: stretch;
+        flex-direction: column;
     }
 
     .profile-card--wide,

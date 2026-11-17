@@ -173,3 +173,14 @@
 | Prompt | Necesito que en las páginas titles añadas un apartado donde haya unas tarjetas horizontales con una imagen para que se vean a los actores (cast principal). |
 | Resultat | Es va afegir una secció de repartiment principal a la fitxa de cada títol, amb fins a vuit actors ordenats pel seu ordre de crèdit, el nom del personatge i la foto disponible. També es va afegir un fallback visual amb inicials quan una persona no té `photo_path`, juntament amb estils horitzontals responsive. |
 | Commit / PR | |
+
+## Registre 17
+
+| Camp | Contingut |
+|---|---|
+| Data i autor | 2026-11-17 — Eric |
+| Eina | GitHub Copilot |
+| Objectiu | Afegir millores de producte i presentació a les funcionalitats d'usuari. |
+| Prompt | Lo de las tarjetas visuales, el perfil completo, los filtros de administración, el botón «Sorpréndeme», las listas personalizadas y las estadísticas personales quiero implementarlo. |
+| Resultat | Es van afegir targetes i estadístiques al perfil, filtres de moderació, el botó «Sorpréndeme», llistes personalitzades i la seva gestió. També es van afegir proves específiques i la suite completa supera 40 tests amb 153 assertions. |
+| Commit / PR | |

@@ -32,6 +32,8 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [CatalogController::class, 'index'])
         ->name('dashboard');
+    Route::get('/surprise', [CatalogController::class, 'surprise'])
+        ->name('titles.surprise');
 
     Route::get('/titles/{title}', [TitleInteractionController::class, 'show'])
         ->name('titles.show');
@@ -49,6 +51,10 @@ Route::middleware('auth')->group(function () {
         ->name('comments.destroy');
     Route::get('/my-lists', [WatchlistController::class, 'index'])
         ->name('lists.index');
+    Route::post('/my-lists', [WatchlistController::class, 'storeCustom'])
+        ->name('lists.custom.store');
+    Route::delete('/my-lists/{watchlist}', [WatchlistController::class, 'destroyList'])
+        ->name('lists.custom.destroy');
     Route::post('/titles/{title}/lists', [WatchlistController::class, 'store'])
         ->name('lists.store');
     Route::delete('/titles/{title}/lists', [WatchlistController::class, 'destroy'])

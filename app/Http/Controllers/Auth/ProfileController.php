@@ -20,6 +20,16 @@ class ProfileController extends Controller
 
         return view('profile.edit', [
             'user' => $user,
+            'stats' => [
+                'ratings' => $user->ratings->count(),
+                'reviews' => $user->reviews->count(),
+                'comments' => $user->comments()->count(),
+                'saved_titles' => $user->watchlists
+                    ->flatMap(fn ($watchlist) => $watchlist->titles)
+                    ->unique('id')
+                    ->count(),
+                'average_rating' => $user->ratings->avg('score'),
+            ],
         ]);
     }
 

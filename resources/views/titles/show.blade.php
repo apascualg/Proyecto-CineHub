@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', $title->title.' · CineHub')
+
 @section('content')
     <article class="title-detail">
         <a href="{{ route('dashboard') }}" class="title-detail__back">Volver al catálogo</a>
@@ -48,6 +50,19 @@
                         </article>
                     @endforeach
                 </div>
+                @if ($userLists->where('type', 'custom')->isNotEmpty())
+                    <form method="POST" action="{{ route('lists.store', $title) }}" class="custom-list-add">
+                        @csrf
+                        <label for="custom-list">Añadir a una lista personalizada</label>
+                        <select id="custom-list" name="watchlist_id" required>
+                            <option value="">Selecciona una lista</option>
+                            @foreach ($userLists->where('type', 'custom') as $customList)
+                                <option value="{{ $customList->id }}">{{ $customList->name }}</option>
+                            @endforeach
+                        </select>
+                        <button type="submit">Añadir</button>
+                    </form>
+                @endif
             </section>
         @endif
 

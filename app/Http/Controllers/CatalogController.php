@@ -4,11 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Genre;
 use App\Models\Title;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class CatalogController extends Controller
 {
+    public function surprise(): RedirectResponse
+    {
+        $title = Title::query()
+            ->where('status', 'published')
+            ->inRandomOrder()
+            ->firstOrFail();
+
+        return redirect()->route('titles.show', $title);
+    }
+
     public function index(Request $request): View
     {
         $filters = $request->validate([

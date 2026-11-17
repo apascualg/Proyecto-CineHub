@@ -11,10 +11,19 @@ use Illuminate\View\View;
 
 class ReviewController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
+        $validated = $request->validate([
+            'status' => ['nullable', 'in:pending,approved,hidden,rejected'],
+        ]);
+
         return view('admin.reviews.index', [
-            'reviews' => Review::with(['user', 'title'])->latest()->paginate(20),
+            'reviews' => Review::with(['user', 'title'])
+                ->when($validated['status'] ?? null, fn ($query, string $status) => $query->where('status', $status))
+                ->latest()
+                ->paginate(20)
+                ->withQueryString(),
+            'selectedStatus' => $validated['status'] ?? '',
         ]);
     }
 

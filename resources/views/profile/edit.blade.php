@@ -9,6 +9,25 @@
         </div>
 
         <div class="profile-grid">
+            <section class="profile-stats profile-card--wide">
+                <div>
+                    <strong>{{ $stats['saved_titles'] }}</strong>
+                    <span>Títulos guardados</span>
+                </div>
+                <div>
+                    <strong>{{ $stats['ratings'] }}</strong>
+                    <span>Valoraciones</span>
+                </div>
+                <div>
+                    <strong>{{ $stats['reviews'] }}</strong>
+                    <span>Reseñas</span>
+                </div>
+                <div>
+                    <strong>{{ $stats['average_rating'] ? number_format($stats['average_rating'], 1) : '—' }}</strong>
+                    <span>Media personal</span>
+                </div>
+            </section>
+
             <section class="profile-card profile-card--account">
                 <h2>Datos personales</h2>
                 <form method="POST" action="{{ route('profile.update') }}" class="profile-form">

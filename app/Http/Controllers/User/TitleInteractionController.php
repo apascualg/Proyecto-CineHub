@@ -47,7 +47,6 @@ class TitleInteractionController extends Controller
 
         $userLists = Auth::user()
             ->watchlists()
-            ->whereIn('type', ['favorites', 'pending', 'watched'])
             ->with('titles')
             ->get()
             ->keyBy('type');

@@ -67,4 +67,53 @@ class WatchlistTest extends TestCase
             ->assertOk()
             ->assertDontSee($title->title);
     }
+
+    public function test_a_user_can_create_a_custom_list_and_add_a_title_to_it(): void
+    {
+        $user = User::factory()->create();
+        $title = Title::factory()->published()->create();
+
+        $this->actingAs($user)
+            ->post(route('lists.custom.store'), [
+                'name' => 'Cine de verano',
+                'description' => 'Películas para las vacaciones.',
+            ])
+            ->assertRedirect(route('lists.index'));
+
+        $watchlist = $user->watchlists()->where('type', 'custom')->firstOrFail();
+
+        $this->actingAs($user)
+            ->post(route('lists.store', $title), ['watchlist_id' => $watchlist->id])
+            ->assertRedirect(route('titles.show', $title));
+
+        $this->assertDatabaseHas('watchlists', [
+            'id' => $watchlist->id,
+            'name' => 'Cine de verano',
+            'type' => 'custom',
+        ]);
+        $this->assertDatabaseHas('watchlist_title', [
+            'watchlist_id' => $watchlist->id,
+            'title_id' => $title->id,
+        ]);
+    }
+
+    public function test_a_user_cannot_manage_another_users_custom_list(): void
+    {
+        $owner = User::factory()->create();
+        $otherUser = User::factory()->create();
+        $watchlist = $owner->watchlists()->create([
+            'name' => 'Privada',
+            'type' => 'custom',
+            'is_public' => false,
+        ]);
+        $title = Title::factory()->published()->create();
+
+        $this->actingAs($otherUser)
+            ->post(route('lists.store', $title), ['watchlist_id' => $watchlist->id])
+            ->assertNotFound();
+
+        $this->actingAs($otherUser)
+            ->delete(route('lists.custom.destroy', $watchlist))
+            ->assertForbidden();
+    }
 }

@@ -36,6 +36,8 @@ php artisan test tests/Feature/Auth tests/Feature/Profile tests/Feature/Database
 - Un título no se duplica dentro de la misma lista.
 - Un usuario puede consultar y quitar títulos de sus listas.
 - Un usuario no puede ver las listas de otro usuario.
+- Un usuario puede crear listas personalizadas y gestionar sus títulos.
+- El botón «Sorpréndeme» redirige a un título publicado.
 
 ### Seeders y datos de demostración
 
@@ -54,8 +56,8 @@ php artisan test tests/Feature/Auth tests/Feature/Profile tests/Feature/Database
 Última ejecución de la suite completa:
 
 ```text
-33 tests passed
-132 assertions
+40 tests passed
+153 assertions
 ```
 
 La ejecución incluye las pruebas de autenticación, perfil, autorización, catálogo, seeders, valoraciones, reseñas, comentarios y listas personales. También se verificó que el seeder puede ejecutarse dos veces sin duplicar registros.

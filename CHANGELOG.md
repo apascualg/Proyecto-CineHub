@@ -23,4 +23,6 @@
 - Añadidas listas personales de favoritos, pendientes y vistos.
 - Ampliado el perfil con valoraciones, reseñas y listas.
 - Añadido el usuario administrador local `root@cinehub.test`.
-- La suite completa queda en 33 tests superados.
+- Añadidas listas personalizadas, estadísticas personales y el botón «Sorpréndeme».
+- Añadidos filtros de estado para la moderación de reseñas.
+- La suite completa queda en 40 tests superados.

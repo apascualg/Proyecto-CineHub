@@ -5,6 +5,7 @@
         <div class="catalog-hero">
             <p class="catalog-hero__eyebrow">Descubre</p>
             <h1>Encuentra tu próxima película o serie</h1>
+            <a href="{{ route('titles.surprise') }}" class="surprise-button">Sorpréndeme</a>
         </div>
 
         <form method="GET" action="{{ route('dashboard') }}" class="catalog-search-form">

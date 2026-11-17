@@ -35,7 +35,11 @@ Eric será responsable de la interfaz compartida y de las funciones que los usua
 - Las reseñas nuevas quedan pendientes de moderación y se muestran las aprobadas.
 - Las valoraciones y reseñas tienen cobertura funcional de creación, actualización, eliminación, validación, permisos y moderación.
 - Los usuarios pueden gestionar listas de favoritos, pendientes y vistos sin duplicar títulos.
+- Los usuarios pueden crear listas personalizadas.
 - El perfil muestra las valoraciones, reseñas y listas personales del usuario.
+- El perfil muestra estadísticas personales básicas.
+- El catálogo incluye el botón «Sorpréndeme».
+- La moderación de reseñas permite filtrar por estado.
 - La compilación de Vite, las rutas, la sintaxis PHP y las vistas Blade se han validado correctamente.
 
 ### Cierre de la parte de Eric
