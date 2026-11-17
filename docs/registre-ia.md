@@ -132,3 +132,14 @@
 | Prompt | Afegeix al registre que avui hem acabat i explica fins on hem arribat i per on hem de continuar el següent dia. |
 | Resultat | Vaig deixar acabats el layout, el catàleg amb cerca i filtres, la ficha de títol, les valoracions i les ressenyes. També vaig documentar que el següent dia he de començar pels tests funcionals i continuar amb comentaris, llistes personals, perfil i proves d'integració. |
 | Commit / PR | |
+
+## Registre 13
+
+| Camp | Contingut |
+|---|---|
+| Data i autor | 2026-11-17 — Adrián |
+| Eina | GitHub Copilot |
+| Objectiu | Afegir el repartiment principal a les pàgines de detall de pel·lícules i sèries. |
+| Prompt | Necesito que en las páginas titles añadas un apartado donde haya unas tarjetas horizontales con una imagen para que se vean a los actores (cast principal). |
+| Resultat | Es va afegir una secció de repartiment principal a la fitxa de cada títol, amb fins a vuit actors ordenats pel seu ordre de crèdit, el nom del personatge i la foto disponible. També es va afegir un fallback visual amb inicials quan una persona no té `photo_path`, juntament amb estils horitzontals responsive. |
+| Commit / PR | |

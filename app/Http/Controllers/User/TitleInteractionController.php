@@ -16,7 +16,13 @@ class TitleInteractionController extends Controller
     {
         abort_unless($title->status === 'published', 404);
 
-        $title->load(['genres', 'credits.person'])
+        $title->load([
+            'genres',
+            'credits' => fn ($query) => $query
+                ->where('role_type', 'actor')
+                ->with('person')
+                ->orderBy('billing_order'),
+        ])
             ->loadAvg('ratings', 'score')
             ->loadCount('ratings');
 
