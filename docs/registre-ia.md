@@ -137,6 +137,7 @@
 
 | Camp | Contingut |
 |---|---|
+<<<<<<< HEAD
 | Data i autor | 2026-11-17 — Eric |
 | Eina | GitHub Copilot |
 | Objectiu | Afegir proves funcionals per validar les valoracions i les ressenyes de CineHub. |
@@ -164,4 +165,11 @@
 | Objectiu | Fer la revisió final d'integració de les funcionalitats d'usuari abans de l'entrega. |
 | Prompt | Vale, vamos a por el último apartado: revisa la integración completa, ejecuta las pruebas y valida que la aplicación esté preparada para entregar. |
 | Resultat | Es van validar 33 tests amb 132 assertions, les 26 rutes de l'aplicació, la compilació de les vistes Blade i la build de Vite. La part d'Eric queda integrada i només falta la revisió final conjunta i l'entrega del projecte. |
+=======
+| Data i autor | 2026-11-17 — Adrián |
+| Eina | GitHub Copilot |
+| Objectiu | Afegir el repartiment principal a les pàgines de detall de pel·lícules i sèries. |
+| Prompt | Necesito que en las páginas titles añadas un apartado donde haya unas tarjetas horizontales con una imagen para que se vean a los actores (cast principal). |
+| Resultat | Es va afegir una secció de repartiment principal a la fitxa de cada títol, amb fins a vuit actors ordenats pel seu ordre de crèdit, el nom del personatge i la foto disponible. També es va afegir un fallback visual amb inicials quan una persona no té `photo_path`, juntament amb estils horitzontals responsive. |
+>>>>>>> ace455a1865480f4e483af7245b20bc4d88858f8
 | Commit / PR | |

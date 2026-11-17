@@ -21,6 +21,36 @@
             </div>
         </header>
 
+        @if ($title->credits->isNotEmpty())
+            <section class="cast-section">
+                <div class="cast-section__heading">
+                    <h2>Reparto principal</h2>
+                    <span>{{ $title->credits->count() }}</span>
+                </div>
+
+                <div class="cast-list">
+                    @foreach ($title->credits->take(8) as $credit)
+                        <article class="cast-card">
+                            <div
+                                class="cast-card__photo @if (!$credit->person->photo_path) cast-card__photo--fallback @endif"
+                                @if ($credit->person->photo_path) style="background-image: url('{{ $credit->person->photo_path }}')" @endif
+                                role="img"
+                                aria-label="Foto de {{ $credit->person->name }}"
+                            >
+                                @if (!$credit->person->photo_path)
+                                    <span>{{ collect(explode(' ', trim($credit->person->name)))->filter()->map(fn ($part) => mb_substr($part, 0, 1))->take(2)->join('') }}</span>
+                                @endif
+                            </div>
+                            <div class="cast-card__body">
+                                <h3>{{ $credit->person->name }}</h3>
+                                <p>{{ $credit->character_name ?: 'Reparto' }}</p>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+            </section>
+        @endif
+
         <div class="title-detail__content">
             <section class="interaction-panel">
                 <h2>Valora este título</h2>
