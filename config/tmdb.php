@@ -10,5 +10,8 @@ return [
 =======
     'ca_bundle' => env('TMDB_CA_BUNDLE', 'C:\\php\\extras\\ssl\\cacert.pem'),
     'region' => env('TMDB_REGION', 'ES'),
+<<<<<<< HEAD
+>>>>>>> 8760778abceaf07eeb06c90952f2a78cfb5c63cd
+=======
 >>>>>>> 8760778abceaf07eeb06c90952f2a78cfb5c63cd
 ];
