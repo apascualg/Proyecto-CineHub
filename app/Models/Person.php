@@ -11,7 +11,7 @@ class Person extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'biography', 'birth_date', 'photo_path'];
+    protected $fillable = ['tmdb_id', 'name', 'biography', 'birth_date', 'photo_path'];
 
     protected function casts(): array
     {

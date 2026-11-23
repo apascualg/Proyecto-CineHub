@@ -12,7 +12,7 @@ class Title extends Model
     use HasFactory;
 
     protected $fillable = [
-        'type', 'title', 'original_title', 'slug', 'synopsis', 'release_date',
+        'tmdb_id', 'source', 'type', 'title', 'original_title', 'slug', 'synopsis', 'release_date',
         'duration_minutes', 'seasons_count', 'episodes_count', 'poster_path',
         'backdrop_path', 'trailer_url', 'status',
     ];
