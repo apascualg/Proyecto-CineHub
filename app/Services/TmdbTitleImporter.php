@@ -6,6 +6,7 @@ use App\Models\Credit;
 use App\Models\Genre;
 use App\Models\Person;
 use App\Models\Title;
+use App\Support\StreamingProvider;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -54,7 +55,10 @@ class TmdbTitleImporter
                         ? rtrim(config('tmdb.image_base_url'), '/').'/original'.$data['backdrop_path']
                         : null,
                     'trailer_url' => null,
-                    'streaming_providers' => $this->streamingProviders($data),
+                    'streaming_providers' => $this->streamingProviders(
+                        $data,
+                        $titleValue,
+                    ),
                     'status' => 'published',
                 ],
             );
@@ -170,22 +174,23 @@ class TmdbTitleImporter
         return $slug;
     }
 
-    private function streamingProviders(array $data): array
+    private function streamingProviders(array $data, string $title): array
     {
         $regions = $data['watch/providers']['results'] ?? [];
         $region = config('tmdb.region', 'ES');
         $providerData = $regions[$region] ?? ($regions['US'] ?? null);
         $providers = $providerData['flatrate'] ?? [];
+        $tmdbLink = $providerData['link'] ?? null;
 
-        return collect($providers)
+        $normalized = collect($providers)
             ->map(fn (array $provider): array => [
                 'name' => $provider['provider_name'],
                 'logo_url' => isset($provider['logo_path'])
                     ? rtrim(config('tmdb.image_base_url'), '/').'/w92'.$provider['logo_path']
                     : null,
             ])
-            ->unique('name')
-            ->values()
             ->all();
+
+        return StreamingProvider::normalize($normalized, $title, $tmdbLink);
     }
 }

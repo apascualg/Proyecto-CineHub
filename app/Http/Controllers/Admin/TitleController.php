@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreTitleRequest;
 use App\Http\Requests\Admin\UpdateTitleRequest;
+use App\Support\StreamingProvider;
 use App\Models\Genre;
 use App\Models\Title;
 use Illuminate\Http\RedirectResponse;
@@ -32,6 +33,7 @@ class TitleController extends Controller
         unset($validated['genres']);
         $validated['streaming_providers'] = $this->parseStreamingProviders(
             $validated['streaming_providers'] ?? null,
+            $validated['title'] ?? null,
         );
 
         DB::transaction(function () use ($validated, $genres): void {
@@ -57,6 +59,7 @@ class TitleController extends Controller
         unset($validated['genres']);
         $validated['streaming_providers'] = $this->parseStreamingProviders(
             $validated['streaming_providers'] ?? null,
+            $validated['title'] ?? $title->title,
         );
 
         DB::transaction(function () use ($title, $validated, $genres): void {
@@ -81,18 +84,18 @@ class TitleController extends Controller
         return back()->with('status', 'Estado del título actualizado correctamente.');
     }
 
-    private function parseStreamingProviders(?string $value): array
+    private function parseStreamingProviders(?string $value, ?string $title = null): array
     {
         if ($value === null || trim($value) === '') {
             return [];
         }
 
-        return collect(preg_split('/[,;\n]+/', $value))
+        $providers = collect(preg_split('/[,;\n]+/', $value))
             ->map(fn (string $name): string => trim($name))
             ->filter()
-            ->unique(fn (string $name): string => mb_strtolower($name))
             ->map(fn (string $name): array => ['name' => $name, 'logo_url' => null])
-            ->values()
             ->all();
+
+        return StreamingProvider::normalize($providers, $title);
     }
 }

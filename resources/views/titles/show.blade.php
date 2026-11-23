@@ -27,15 +27,23 @@
             <section class="streaming-section">
                 <h2>Plataformas de streaming</h2>
                 <div class="streaming-providers">
-                    @foreach ($title->streaming_providers as $provider)
-                        <div class="streaming-provider">
+                    @foreach (\App\Support\StreamingProvider::normalize(
+                        $title->streaming_providers,
+                        $title->title,
+                    ) as $provider)
+                        <a
+                            class="streaming-provider"
+                            href="{{ $provider['url'] ?: '#' }}"
+                            @if (!empty($provider['url'])) target="_blank" rel="noopener noreferrer" @endif
+                            aria-label="Ver {{ $title->title }} en {{ $provider['name'] }}"
+                        >
                             @if (!empty($provider['logo_url']))
                                 <img src="{{ $provider['logo_url'] }}" alt="{{ $provider['name'] }}" loading="lazy">
                             @else
                                 <span class="streaming-provider__fallback">{{ mb_substr($provider['name'], 0, 1) }}</span>
                             @endif
                             <span>{{ $provider['name'] }}</span>
-                        </div>
+                        </a>
                     @endforeach
                 </div>
             </section>

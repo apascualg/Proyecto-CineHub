@@ -66,7 +66,9 @@ class CatalogDetailTest extends TestCase
         $title = Title::factory()->published()->create([
             'streaming_providers' => [
                 ['name' => 'Netflix', 'logo_url' => null],
-                ['name' => 'Disney+', 'logo_url' => null],
+                ['name' => 'Netflix Standard with Ads', 'logo_url' => null],
+                ['name' => 'Amazon Prime Video', 'logo_url' => null],
+                ['name' => 'Amazon Prime Video with Ads', 'logo_url' => null],
             ],
         ]);
 
@@ -75,11 +77,15 @@ class CatalogDetailTest extends TestCase
             ->assertOk()
             ->assertSee('Plataformas de streaming')
             ->assertSee('Netflix')
-            ->assertSee('Disney+');
+            ->assertDontSee('Netflix Standard with Ads')
+            ->assertSee('Amazon Prime Video')
+            ->assertDontSee('Amazon Prime Video with Ads')
+            ->assertSee('netflix.com')
+            ->assertSee('primevideo.com');
 
         $this->get(route('catalog.show', $title))
             ->assertOk()
             ->assertSee('Netflix')
-            ->assertSee('Disney+');
+            ->assertSee('Amazon Prime Video');
     }
 }
