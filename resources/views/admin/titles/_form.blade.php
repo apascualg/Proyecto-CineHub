@@ -53,6 +53,23 @@
         <label for="trailer_url">URL del tráiler</label>
         <input id="trailer_url" name="trailer_url" type="url" value="{{ old('trailer_url', $title->trailer_url ?? '') }}" />
     </div>
+    <div>
+        <label for="streaming_providers">Plataformas de streaming</label>
+        <input
+            id="streaming_providers"
+            name="streaming_providers"
+            value="{{ old(
+                'streaming_providers',
+                isset($title)
+                    ? collect($title->streaming_providers ?? [])
+                        ->pluck('name')
+                        ->filter()
+                        ->join(', ')
+                    : ''
+            ) }}"
+            placeholder="Netflix, Disney+, HBO Max"
+        />
+    </div>
 </div>
 <div>
     <label for="synopsis">Sinopsis</label>

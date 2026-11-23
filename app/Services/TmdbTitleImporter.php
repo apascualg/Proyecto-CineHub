@@ -36,7 +36,7 @@ class TmdbTitleImporter
                     'title' => $titleValue,
                     'original_title' => $originalTitle,
                     'slug' => $slug,
-                    'synopsis' => $data['overview'] ?: null,
+                    'synopsis' => $data['overview'] ?? null,
                     'release_date' => $releaseDate ?: null,
                     'duration_minutes' => $type === 'movie'
                         ? ($data['runtime'] ?: null)
@@ -54,6 +54,7 @@ class TmdbTitleImporter
                         ? rtrim(config('tmdb.image_base_url'), '/').'/original'.$data['backdrop_path']
                         : null,
                     'trailer_url' => null,
+                    'streaming_providers' => $this->streamingProviders($data),
                     'status' => 'published',
                 ],
             );
@@ -167,5 +168,24 @@ class TmdbTitleImporter
         }
 
         return $slug;
+    }
+
+    private function streamingProviders(array $data): array
+    {
+        $regions = $data['watch/providers']['results'] ?? [];
+        $region = config('tmdb.region', 'ES');
+        $providerData = $regions[$region] ?? ($regions['US'] ?? null);
+        $providers = $providerData['flatrate'] ?? [];
+
+        return collect($providers)
+            ->map(fn (array $provider): array => [
+                'name' => $provider['provider_name'],
+                'logo_url' => isset($provider['logo_path'])
+                    ? rtrim(config('tmdb.image_base_url'), '/').'/w92'.$provider['logo_path']
+                    : null,
+            ])
+            ->unique('name')
+            ->values()
+            ->all();
     }
 }

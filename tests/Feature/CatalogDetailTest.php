@@ -59,4 +59,27 @@ class CatalogDetailTest extends TestCase
             ->get(route('titles.show', $title))
             ->assertNotFound();
     }
+
+    public function test_the_detail_displays_configured_streaming_providers(): void
+    {
+        $user = User::factory()->create();
+        $title = Title::factory()->published()->create([
+            'streaming_providers' => [
+                ['name' => 'Netflix', 'logo_url' => null],
+                ['name' => 'Disney+', 'logo_url' => null],
+            ],
+        ]);
+
+        $this->actingAs($user)
+            ->get(route('titles.show', $title))
+            ->assertOk()
+            ->assertSee('Plataformas de streaming')
+            ->assertSee('Netflix')
+            ->assertSee('Disney+');
+
+        $this->get(route('catalog.show', $title))
+            ->assertOk()
+            ->assertSee('Netflix')
+            ->assertSee('Disney+');
+    }
 }

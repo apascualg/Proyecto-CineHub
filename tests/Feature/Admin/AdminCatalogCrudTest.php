@@ -26,6 +26,7 @@ class AdminCatalogCrudTest extends TestCase
                 'original_title' => 'Updated title',
                 'slug' => 'titulo-actualizado',
                 'status' => 'published',
+                'streaming_providers' => 'Netflix, Disney+',
             ])
             ->assertRedirect(route('admin.titles.index'));
 
@@ -35,6 +36,10 @@ class AdminCatalogCrudTest extends TestCase
             'type' => 'series',
             'status' => 'published',
         ]);
+        $this->assertSame(
+            ['Netflix', 'Disney+'],
+            collect($title->fresh()->streaming_providers)->pluck('name')->all(),
+        );
 
         $this->actingAs($admin)
             ->delete(route('admin.titles.destroy', $title))

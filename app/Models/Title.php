@@ -14,12 +14,15 @@ class Title extends Model
     protected $fillable = [
         'tmdb_id', 'source', 'type', 'title', 'original_title', 'slug', 'synopsis', 'release_date',
         'duration_minutes', 'seasons_count', 'episodes_count', 'poster_path',
-        'backdrop_path', 'trailer_url', 'status',
+        'backdrop_path', 'trailer_url', 'streaming_providers', 'status',
     ];
 
     protected function casts(): array
     {
-        return ['release_date' => 'date'];
+        return [
+            'release_date' => 'date',
+            'streaming_providers' => 'array',
+        ];
     }
 
     public function genres(): BelongsToMany
