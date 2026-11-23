@@ -468,8 +468,12 @@ APP_KEY=
 APP_DEBUG=true
 APP_URL=http://localhost
 
-DB_CONNECTION=sqlite
-DB_DATABASE=database/database.sqlite
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=cinehub
+DB_USERNAME=root
+DB_PASSWORD=
 
 TMDB_API_KEY=
 ```
