@@ -162,11 +162,19 @@
                             <div class="review-comment">
                                 <p><strong>{{ $comment->user->name }}</strong>: {{ $comment->body }}</p>
                                 @if ($comment->user_id === auth()->id())
-                                    <form method="POST" action="{{ route('comments.destroy', $comment) }}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit">Eliminar</button>
-                                    </form>
+                                        <div class="comment-actions">
+                                            <form method="POST" action="{{ route('comments.update', $comment) }}" class="comment-edit-form">
+                                                @csrf
+                                                @method('PUT')
+                                                <input type="text" name="body" value="{{ $comment->body }}" minlength="2" maxlength="1000" required>
+                                                <button type="submit">Guardar</button>
+                                            </form>
+                                            <form method="POST" action="{{ route('comments.destroy', $comment) }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit">Eliminar</button>
+                                            </form>
+                                        </div>
                                 @endif
                             </div>
                         @endforeach

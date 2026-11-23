@@ -79,6 +79,24 @@
                 @endforelse
             </section>
 
+            <section class="profile-card profile-card--wide">
+                <div class="profile-card__heading">
+                    <h2>Mis comentarios</h2>
+                    <span class="profile-card__count">{{ $user->comments->count() }}</span>
+                </div>
+                @forelse ($user->comments as $comment)
+                    <article class="profile-review">
+                        <div>
+                            <a href="{{ route('titles.show', $comment->review->title) }}">{{ $comment->review->title->title }}</a>
+                            <span class="profile-comment-date">{{ $comment->created_at->format('d/m/Y') }}</span>
+                        </div>
+                        <p>{{ $comment->body }}</p>
+                    </article>
+                @empty
+                    <p class="empty-state">Todavía no has escrito ningún comentario.</p>
+                @endforelse
+            </section>
+
             <section class="profile-card">
                 <div class="profile-card__heading">
                     <h2>Mis listas</h2>

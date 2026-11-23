@@ -16,6 +16,7 @@ class ProfileController extends Controller
             'ratings.title',
             'reviews.title',
             'watchlists.titles',
+            'comments.review.title',
         ]);
 
         return view('profile.edit', [

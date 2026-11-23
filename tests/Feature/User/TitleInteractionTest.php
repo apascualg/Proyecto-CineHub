@@ -187,4 +187,24 @@ class TitleInteractionTest extends TestCase
 
         $this->assertDatabaseHas('comments', ['id' => $comment->id]);
     }
+
+    public function test_a_user_can_update_their_own_comment(): void
+    {
+        $user = User::factory()->create();
+        $comment = Comment::factory()->create([
+            'user_id' => $user->id,
+            'body' => 'Comentario antiguo',
+        ]);
+
+        $this->actingAs($user)
+            ->put(route('comments.update', $comment), [
+                'body' => 'Comentario actualizado',
+            ])
+            ->assertRedirect(route('titles.show', $comment->review->title));
+
+        $this->assertDatabaseHas('comments', [
+            'id' => $comment->id,
+            'body' => 'Comentario actualizado',
+        ]);
+    }
 }

@@ -149,4 +149,19 @@ class TitleInteractionController extends Controller
         return redirect()->route('titles.show', $title)
             ->with('status', 'Tu comentario se ha eliminado correctamente.');
     }
+
+    public function updateComment(Request $request, Comment $comment): RedirectResponse
+    {
+        abort_unless($comment->user_id === Auth::id(), 403);
+
+        $validated = $request->validate([
+            'body' => ['required', 'string', 'min:2', 'max:1000'],
+        ]);
+
+        $comment->update($validated);
+        $title = $comment->review->title;
+
+        return redirect()->route('titles.show', $title)
+            ->with('status', 'Tu comentario se ha actualizado correctamente.');
+    }
 }

@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -18,9 +17,15 @@ use App\Http\Controllers\User\TitleInteractionController;
 use App\Http\Controllers\User\WatchlistController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return redirect()->route('login');
-});
+Route::get('/', [CatalogController::class, 'home'])
+    ->name('home');
+Route::get('/explore', [CatalogController::class, 'publicIndex'])
+    ->name('catalog.explore');
+Route::get('/explore/{title}', [CatalogController::class, 'publicShow'])
+    ->name('catalog.show');
+Route::get('/catalog/suggestions', [CatalogController::class, 'suggestions'])
+    ->middleware('auth')
+    ->name('catalog.suggestions');
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisteredUserController::class, 'create'])
@@ -42,17 +47,6 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/email/verify', [EmailVerificationController::class, 'notice'])
-        ->name('verification.notice');
-    Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])
-        ->middleware('signed')
-        ->name('verification.verify');
-    Route::post('/email/verification-notification', [EmailVerificationController::class, 'resend'])
-        ->middleware('throttle:6,1')
-        ->name('verification.send');
-});
-
-Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [CatalogController::class, 'index'])
         ->name('dashboard');
     Route::get('/surprise', [CatalogController::class, 'surprise'])
@@ -70,6 +64,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('reviews.destroy');
     Route::post('/reviews/{review}/comments', [TitleInteractionController::class, 'storeComment'])
         ->name('reviews.comments.store');
+    Route::put('/comments/{comment}', [TitleInteractionController::class, 'updateComment'])
+        ->name('comments.update');
     Route::delete('/comments/{comment}', [TitleInteractionController::class, 'destroyComment'])
         ->name('comments.destroy');
     Route::get('/my-lists', [WatchlistController::class, 'index'])
