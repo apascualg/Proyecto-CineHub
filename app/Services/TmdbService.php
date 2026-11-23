@@ -58,7 +58,7 @@ class TmdbService
     {
         $response = $this->http->get("/movie/{$id}", $this->authenticatedParams([
             'language' => 'es-ES',
-            'append_to_response' => 'credits',
+            'append_to_response' => 'credits,watch/providers',
         ]));
 
         $response->throw();
@@ -70,12 +70,33 @@ class TmdbService
     {
         $response = $this->http->get("/tv/{$id}", $this->authenticatedParams([
             'language' => 'es-ES',
-            'append_to_response' => 'credits',
+            'append_to_response' => 'credits,watch/providers',
         ]));
 
         $response->throw();
 
         return $response->json();
+    }
+
+    public function discover(string $type, array $parameters = []): array
+    {
+        $endpoint = $type === 'series'
+            ? '/discover/tv'
+            : '/discover/movie';
+
+        $response = $this->http->get(
+            $endpoint,
+            $this->authenticatedParams(array_merge([
+                'language' => 'es-ES',
+                'sort_by' => 'vote_average.desc',
+                'vote_count.gte' => 500,
+                'include_adult' => false,
+            ], $parameters)),
+        );
+
+        $response->throw();
+
+        return $response->json('results', []);
     }
 
     private function authenticatedParams(array $params): array

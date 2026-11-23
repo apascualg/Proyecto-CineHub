@@ -23,6 +23,24 @@
             </div>
         </header>
 
+        @if (!empty($title->streaming_providers))
+            <section class="streaming-section">
+                <h2>Plataformas de streaming</h2>
+                <div class="streaming-providers">
+                    @foreach ($title->streaming_providers as $provider)
+                        <div class="streaming-provider">
+                            @if (!empty($provider['logo_url']))
+                                <img src="{{ $provider['logo_url'] }}" alt="{{ $provider['name'] }}" loading="lazy">
+                            @else
+                                <span class="streaming-provider__fallback">{{ mb_substr($provider['name'], 0, 1) }}</span>
+                            @endif
+                            <span>{{ $provider['name'] }}</span>
+                        </div>
+                    @endforeach
+                </div>
+            </section>
+        @endif
+
         @if ($title->credits->isNotEmpty())
             <section class="cast-section">
                 <div class="cast-section__heading">

@@ -30,6 +30,9 @@ class TitleController extends Controller
         $validated = $request->validated();
         $genres = $validated['genres'] ?? [];
         unset($validated['genres']);
+        $validated['streaming_providers'] = $this->parseStreamingProviders(
+            $validated['streaming_providers'] ?? null,
+        );
 
         DB::transaction(function () use ($validated, $genres): void {
             $title = Title::create($validated);
@@ -52,6 +55,9 @@ class TitleController extends Controller
         $validated = $request->validated();
         $genres = $validated['genres'] ?? [];
         unset($validated['genres']);
+        $validated['streaming_providers'] = $this->parseStreamingProviders(
+            $validated['streaming_providers'] ?? null,
+        );
 
         DB::transaction(function () use ($title, $validated, $genres): void {
             $title->update($validated);
@@ -73,5 +79,20 @@ class TitleController extends Controller
         $title->update(['status' => $title->status === 'published' ? 'draft' : 'published']);
 
         return back()->with('status', 'Estado del título actualizado correctamente.');
+    }
+
+    private function parseStreamingProviders(?string $value): array
+    {
+        if ($value === null || trim($value) === '') {
+            return [];
+        }
+
+        return collect(preg_split('/[,;\n]+/', $value))
+            ->map(fn (string $name): string => trim($name))
+            ->filter()
+            ->unique(fn (string $name): string => mb_strtolower($name))
+            ->map(fn (string $name): array => ['name' => $name, 'logo_url' => null])
+            ->values()
+            ->all();
     }
 }

@@ -27,6 +27,7 @@ class StoreTitleRequest extends FormRequest
             'poster_path' => ['nullable', 'string', 'max:255'],
             'backdrop_path' => ['nullable', 'string', 'max:255'],
             'trailer_url' => ['nullable', 'url', 'max:500'],
+            'streaming_providers' => ['nullable', 'string', 'max:1000'],
             'status' => ['required', Rule::in(['published', 'draft'])],
             'genres' => ['nullable', 'array'],
             'genres.*' => ['integer', 'exists:genres,id'],

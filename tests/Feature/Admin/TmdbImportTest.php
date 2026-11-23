@@ -220,4 +220,35 @@ class TmdbImportTest extends TestCase
         });
     }
 
+    public function test_discover_can_filter_by_genre_and_sort_by_rating(): void
+    {
+        config([
+            'tmdb.token' => null,
+            'tmdb.api_key' => 'test-v3-key',
+        ]);
+
+        Http::fake([
+            '*' => Http::response([
+                'results' => [
+                    ['id' => 1, 'title' => 'Película mejor valorada'],
+                ],
+            ], 200),
+        ]);
+
+        $results = app(\App\Services\TmdbService::class)->discover('movie', [
+            'with_genres' => 18,
+            'page' => 1,
+        ]);
+
+        $this->assertCount(1, $results);
+        Http::assertSent(function ($request): bool {
+            parse_str((string) parse_url($request->url(), PHP_URL_QUERY), $query);
+
+            return str_contains($request->url(), '/discover/movie')
+                && ($query['with_genres'] ?? null) === '18'
+                && ($query['sort_by'] ?? null) === 'vote_average.desc'
+                && ($query['api_key'] ?? null) === 'test-v3-key';
+        });
+    }
+
 }

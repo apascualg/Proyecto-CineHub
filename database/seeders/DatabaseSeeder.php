@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             UsersSeeder::class,
             CatalogSeeder::class,
             DemoInteractionsSeeder::class,
+            TmdbCatalogSeeder::class,
         ]);
     }
 }

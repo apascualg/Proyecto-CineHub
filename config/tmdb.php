@@ -6,4 +6,5 @@ return [
     'token' => env('TMDB_API_TOKEN'),
     'api_key' => env('TMDB_API_KEY'),
     'ca_bundle' => env('TMDB_CA_BUNDLE', 'C:\\php\\extras\\ssl\\cacert.pem'),
+    'region' => env('TMDB_REGION', 'ES'),
 ];
