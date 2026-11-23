@@ -21,6 +21,7 @@ class TmdbImportTest extends TestCase
 
         config([
             'tmdb.token' => 'test-token',
+            'tmdb.api_key' => null,
             'tmdb.base_url' => 'https://api.themoviedb.org/3',
             'tmdb.image_base_url' => 'https://image.tmdb.org/t/p',
         ]);
@@ -162,7 +163,10 @@ class TmdbImportTest extends TestCase
     public function test_missing_tmdb_token_returns_a_search_error(): void
     {
         $admin = User::factory()->create(['role' => 'admin']);
-        config(['tmdb.token' => null]);
+        config([
+            'tmdb.token' => null,
+            'tmdb.api_key' => null,
+        ]);
 
         $this->actingAs($admin)
             ->get(route('admin.tmdb.search', [
@@ -170,6 +174,50 @@ class TmdbImportTest extends TestCase
                 'type' => 'movie',
             ]))
             ->assertOk()
-            ->assertSee('TMDB_API_TOKEN no está configurado.');
+            ->assertSee('Configura TMDB_API_KEY o TMDB_API_TOKEN');
     }
+
+    public function test_api_key_mode_is_supported(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+        config([
+            'tmdb.token' => null,
+            'tmdb.api_key' => 'test-v3-key',
+        ]);
+
+        Http::fake([
+            'api.themoviedb.org/3/search/movie*' => Http::response([
+                'results' => [],
+            ], 200),
+        ]);
+
+        $this->actingAs($admin)
+            ->get(route('admin.tmdb.search', [
+                'query' => 'Matrix',
+                'type' => 'movie',
+            ]))
+            ->assertOk();
+    }
+
+    public function test_api_key_is_added_to_every_tmdb_request(): void
+    {
+        config([
+            'tmdb.token' => null,
+            'tmdb.api_key' => 'test-v3-key',
+        ]);
+
+        Http::fake([
+            '*' => Http::response(['results' => []], 200),
+        ]);
+
+        $results = app(\App\Services\TmdbService::class)->search('Matrix', 'movie');
+
+        $this->assertSame([], $results);
+        Http::assertSent(function ($request): bool {
+            parse_str((string) parse_url($request->url(), PHP_URL_QUERY), $query);
+
+            return ($query['api_key'] ?? null) === 'test-v3-key';
+        });
+    }
+
 }
