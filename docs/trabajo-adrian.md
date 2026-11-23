@@ -77,5 +77,5 @@ Adrián será el responsable de integrar las rutas en `routes/web.php`, coordin�
 2. Crear seeders y datos de prueba. **Completado.**
 3. Implementar el catálogo público. **Completado.**
 4. Implementar el panel de administración. **Completado.**
-5. Añadir tests. **En curso.**
-6. Entregar las rutas y contratos que Eric necesite para integrar sus funcionalidades.
+5. Añadir tests. **Completado**
+6. Entregar las rutas y contratos que Eric necesite para integrar sus funcionalidades **Completado**

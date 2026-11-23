@@ -10,7 +10,7 @@ class Genre extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug'];
+    protected $fillable = ['tmdb_id', 'name', 'slug'];
 
     public function titles(): BelongsToMany
     {

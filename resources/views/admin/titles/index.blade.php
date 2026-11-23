@@ -4,7 +4,10 @@
     <section class="admin-page">
         <div class="admin-page__header">
             <h1>Películas y series</h1>
-            <a class="admin-button" href="{{ route('admin.titles.create') }}">Nuevo título</a>
+            <div class="admin-table__actions">
+                <a class="admin-button" href="{{ route('admin.tmdb.search') }}">Importar desde TMDB</a>
+                <a class="admin-button" href="{{ route('admin.titles.create') }}">Nuevo título</a>
+            </div>
         </div>
         <div class="admin-table-wrap">
             <table class="admin-table">

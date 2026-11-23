@@ -27,6 +27,7 @@
             <a class="admin-action" href="{{ route('admin.credits.index') }}">Gestionar créditos</a>
             <a class="admin-action" href="{{ route('admin.users.index') }}">Gestionar usuarios</a>
             <a class="admin-action" href="{{ route('admin.reviews.index') }}">Moderar reseñas</a>
+            <a class="admin-action" href="{{ route('admin.tmdb.search') }}">Importar desde TMDB</a>
         </div>
     </section>
 @endsection

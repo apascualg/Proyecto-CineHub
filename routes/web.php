@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\PersonController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\TitleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\TmdbImportController;
 use App\Http\Controllers\User\TitleInteractionController;
 use App\Http\Controllers\User\WatchlistController;
 use Illuminate\Support\Facades\Route;
@@ -84,4 +85,8 @@ Route::middleware(['auth', 'admin'])
         Route::resource('reviews', ReviewController::class)->only(['index', 'update', 'destroy']);
         Route::patch('reviews/{review}/status', [ReviewController::class, 'updateStatus'])
             ->name('reviews.status');
+        Route::get('tmdb', [TmdbImportController::class, 'search'])
+            ->name('tmdb.search');
+        Route::post('tmdb/import', [TmdbImportController::class, 'import'])
+            ->name('tmdb.import');
     });
