@@ -66,3 +66,36 @@ document.querySelectorAll('.catalog-search input[type="search"]').forEach((input
         }
     });
 });
+
+const buttonDescriptions = [
+    [/^Explorar catálogo$/i, 'Abrir el catálogo público con películas y series'],
+    [/^Crear cuenta$/i, 'Crear una cuenta para guardar títulos y valorar contenido'],
+    [/^Registrarme ahora$/i, 'Crear una cuenta gratuita de CineHub'],
+    [/^Iniciar sesión$/i, 'Acceder a tu cuenta personal'],
+    [/^Registrarse$/i, 'Abrir el formulario de registro'],
+    [/^Sorpréndeme$/i, 'Elegir aleatoriamente un título con los filtros actuales'],
+    [/^Cerrar sesión$/i, 'Salir de tu cuenta actual'],
+    [/^Buscar$/i, 'Buscar títulos con el texto y filtros aplicados'],
+    [/^Limpiar$/i, 'Eliminar todos los filtros de búsqueda'],
+    [/^Ver todo$/i, 'Abrir el catálogo completo'],
+    [/^Valorar/i, 'Puntuar el título del 1 al 10'],
+    [/^Añadir a/i, 'Guardar el título en esta lista'],
+    [/^Quitar de/i, 'Eliminar el título de esta lista'],
+    [/^Crear lista$/i, 'Crear una lista personalizada'],
+    [/^Gestionar$/i, 'Abrir la gestión de este apartado'],
+    [/^Administración$/i, 'Abrir el panel de administración'],
+    [/^Moder/i, 'Revisar y cambiar el estado de las reseñas'],
+    [/^Importar$/i, 'Importar este resultado desde TMDB'],
+];
+
+document.querySelectorAll('a, button').forEach((element) => {
+    if (element.hasAttribute('title') || element.hasAttribute('aria-label')) return;
+
+    const text = element.textContent?.trim().replace(/\s+/g, ' ');
+    if (!text) return;
+
+    const match = buttonDescriptions.find(([pattern]) => pattern.test(text));
+    if (match) {
+        element.setAttribute('title', match[1]);
+    }
+});

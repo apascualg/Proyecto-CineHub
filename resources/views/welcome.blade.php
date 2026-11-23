@@ -11,11 +11,20 @@
             <h1>Encuentra tu próxima historia favorita</h1>
             <p>Explora películas y series, consulta sus fichas y descubre qué están valorando otros usuarios.</p>
             <div class="home-hero__actions">
-                <a href="{{ route('catalog.explore') }}" class="surprise-button">Explorar catálogo</a>
+                <a href="{{ route('catalog.explore') }}" class="surprise-button" title="Descubre películas y series">Explorar catálogo</a>
                 @guest
-                    <a href="{{ route('register') }}" class="home-secondary-action">Crear cuenta</a>
+                    <a href="{{ route('register') }}" class="home-secondary-action" title="Activa listas, valoraciones y filtros avanzados">Crear cuenta</a>
+                @else
+                    <a href="{{ route('titles.surprise') }}" class="home-secondary-action" title="Elige una película o serie al azar">Sorpréndeme</a>
                 @endguest
             </div>
+            @guest
+                <div class="home-hero__benefits" aria-label="Ventajas al registrarse">
+                    <span title="Guarda películas y series en tus listas">★ Listas personales</span>
+                    <span title="Puntúa del 1 al 10 y escribe reseñas">★ Valoraciones y reseñas</span>
+                    <span title="Filtra por año, puntuación, director y actor">★ Filtros avanzados</span>
+                </div>
+            @endguest
         </div>
     </section>
 
