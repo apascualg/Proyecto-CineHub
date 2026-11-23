@@ -39,4 +39,25 @@ class ReviewModerationTest extends TestCase
             ->get(route('admin.reviews.index'))
             ->assertForbidden();
     }
+
+    public function test_admin_can_hide_and_delete_a_review(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+        $review = Review::factory()->approved()->create();
+
+        $this->actingAs($admin)
+            ->patch(route('admin.reviews.status', $review), ['status' => 'hidden'])
+            ->assertRedirect(route('admin.reviews.index'));
+
+        $this->assertDatabaseHas('reviews', [
+            'id' => $review->id,
+            'status' => 'hidden',
+        ]);
+
+        $this->actingAs($admin)
+            ->delete(route('admin.reviews.destroy', $review))
+            ->assertRedirect();
+
+        $this->assertDatabaseMissing('reviews', ['id' => $review->id]);
+    }
 }

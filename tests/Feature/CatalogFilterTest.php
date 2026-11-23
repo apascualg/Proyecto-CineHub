@@ -88,4 +88,58 @@ class CatalogFilterTest extends TestCase
                 });
         });
     }
+
+    public function test_it_searches_by_title_and_original_title(): void
+    {
+        $title = Title::factory()->published()->create([
+            'title' => 'Busqueda CineHub',
+            'original_title' => 'CineHub Search',
+        ]);
+        Title::factory()->published()->create([
+            'title' => 'Otra pelicula',
+            'original_title' => 'Different title',
+        ]);
+
+        $this->get(route('dashboard', ['title' => 'Busqueda CineHub']))
+            ->assertOk()
+            ->assertViewHas('titles', fn ($titles): bool => $titles->contains($title));
+
+        $this->get(route('dashboard', ['title' => 'CineHub Search']))
+            ->assertOk()
+            ->assertViewHas('titles', fn ($titles): bool => $titles->contains($title));
+    }
+
+    public function test_it_excludes_draft_titles_from_the_public_catalog(): void
+    {
+        $draft = Title::factory()->create([
+            'title' => 'Borrador no visible',
+            'status' => 'draft',
+        ]);
+
+        $this->get(route('dashboard'))
+            ->assertOk()
+            ->assertViewHas('titles', fn ($titles): bool => !$titles->contains($draft));
+    }
+
+    public function test_it_paginates_catalog_results_and_preserves_filters(): void
+    {
+        Title::factory()->published()->count(13)->create([
+            'type' => 'movie',
+            'title' => fake()->unique()->sentence(3).' Pagination',
+            'release_date' => '2024-01-01',
+        ]);
+
+        $response = $this->get(route('dashboard', [
+            'type' => 'movie',
+            'title' => 'Pagination',
+            'page' => 2,
+        ]));
+
+        $response->assertOk()
+            ->assertViewHas('titles', function ($titles): bool {
+                return $titles->count() === 1
+                    && $titles->every(fn (Title $title): bool => $title->type === 'movie');
+            });
+        $response->assertSee('type=movie');
+    }
 }

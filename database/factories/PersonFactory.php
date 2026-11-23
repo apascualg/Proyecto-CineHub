@@ -17,7 +17,7 @@ class PersonFactory extends Factory
         return [
             'name' => fake()->name(),
             'biography' => fake()->optional()->paragraphs(2, true),
-            'birth_date' => fake()->optional()->dateTimeBetween('-80 years', '-18 years')->format('Y-m-d'),
+            'birth_date' => fake()->optional()->dateTimeBetween('-80 years', '-18 years')?->format('Y-m-d'),
             'photo_path' => null,
         ];
     }
