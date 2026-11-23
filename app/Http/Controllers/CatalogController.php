@@ -10,10 +10,10 @@ use Illuminate\View\View;
 
 class CatalogController extends Controller
 {
-    public function surprise(): RedirectResponse
+    public function surprise(Request $request): RedirectResponse
     {
-        $title = Title::query()
-            ->where('status', 'published')
+        $filters = $this->validatedFilters($request);
+        $title = $this->catalogQuery($filters)
             ->inRandomOrder()
             ->firstOrFail();
 
@@ -22,7 +22,30 @@ class CatalogController extends Controller
 
     public function index(Request $request): View
     {
-        $filters = $request->validate([
+        $filters = $this->validatedFilters($request);
+        $sort = $request->validate([
+            'sort' => ['nullable', 'in:release_desc,release_asc,title,rating_desc,rating_asc'],
+        ])['sort'] ?? 'release_desc';
+
+        $query = $this->catalogQuery($filters);
+
+        $query = match ($sort) {
+            'release_asc' => $query->orderBy('release_date'),
+            'title' => $query->orderBy('title'),
+            'rating_desc' => $query->orderByRaw('ratings_avg_score IS NULL')->orderByDesc('ratings_avg_score'),
+            'rating_asc' => $query->orderByRaw('ratings_avg_score IS NULL')->orderBy('ratings_avg_score'),
+            default => $query->latest('release_date'),
+        };
+
+        $titles = $query->paginate(100)->withQueryString();
+        $genres = Genre::query()->orderBy('name')->get();
+
+        return view('dashboard', compact('titles', 'genres', 'filters', 'sort'));
+    }
+
+    private function validatedFilters(Request $request): array
+    {
+        return $request->validate([
             'title' => ['nullable', 'string', 'max:255'],
             'type' => ['nullable', 'in:movie,series'],
             'genre' => ['nullable', 'integer', 'exists:genres,id'],
@@ -32,7 +55,10 @@ class CatalogController extends Controller
             'director' => ['nullable', 'string', 'max:255'],
             'actor' => ['nullable', 'string', 'max:255'],
         ]);
+    }
 
+    private function catalogQuery(array $filters)
+    {
         $query = Title::query()
             ->where('status', 'published')
             ->with(['genres', 'credits.person'])
@@ -61,9 +87,6 @@ class CatalogController extends Controller
                 ->whereHas('person', fn ($query) => $query->where('name', 'like', "%{$actor}%")));
         });
 
-        $titles = $query->latest('release_date')->paginate(12)->withQueryString();
-        $genres = Genre::query()->orderBy('name')->get();
-
-        return view('dashboard', compact('titles', 'genres', 'filters'));
+        return $query;
     }
 }

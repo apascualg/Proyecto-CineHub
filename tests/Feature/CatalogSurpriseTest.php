@@ -23,4 +23,23 @@ class CatalogSurpriseTest extends TestCase
 
         $this->assertStringContainsString('/titles/', (string) $response->headers->get('Location'));
     }
+
+    public function test_surprise_respects_catalog_filters(): void
+    {
+        $user = User::factory()->create();
+        $matching = Title::factory()->published()->create([
+            'type' => 'series',
+            'title' => 'Serie sorpresa',
+        ]);
+        Title::factory()->published()->create([
+            'type' => 'movie',
+            'title' => 'Película descartada',
+        ]);
+
+        $response = $this->actingAs($user)
+            ->get(route('titles.surprise', ['type' => 'series']))
+            ->assertRedirect(route('titles.show', $matching));
+
+        $this->assertStringContainsString('/titles/', (string) $response->headers->get('Location'));
+    }
 }

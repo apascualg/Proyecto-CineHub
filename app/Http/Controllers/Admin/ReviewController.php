@@ -46,6 +46,20 @@ class ReviewController extends Controller
             ->with('status', 'El estado de la reseña se ha actualizado.');
     }
 
+    public function bulkStatus(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'review_ids' => ['required', 'array', 'min:1'],
+            'review_ids.*' => ['integer', 'exists:reviews,id'],
+            'status' => ['required', 'in:approved,hidden,pending,rejected'],
+        ]);
+
+        Review::whereKey($validated['review_ids'])
+            ->update(['status' => $validated['status']]);
+
+        return back()->with('status', 'Las reseñas seleccionadas se han actualizado.');
+    }
+
     public function destroy(Review $review): RedirectResponse
     {
         $review->delete();

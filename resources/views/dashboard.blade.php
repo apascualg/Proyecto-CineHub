@@ -5,7 +5,7 @@
         <div class="catalog-hero">
             <p class="catalog-hero__eyebrow">Descubre</p>
             <h1>Encuentra tu próxima película o serie</h1>
-            <a href="{{ route('titles.surprise') }}" class="surprise-button">Sorpréndeme</a>
+            <a href="{{ route('titles.surprise', request()->except('page', 'sort')) }}" class="surprise-button">Sorpréndeme</a>
         </div>
 
         <form method="GET" action="{{ route('dashboard') }}" class="catalog-search-form">
@@ -76,6 +76,16 @@
             <section class="catalog-results">
                 <div class="catalog-results__topbar">
                     <p>Mostrando <strong>{{ $titles->total() }}</strong> resultados</p>
+                    <label for="catalog-sort">
+                        Ordenar
+                        <select id="catalog-sort" name="sort" onchange="this.form.submit()">
+                            <option value="release_desc" @selected($sort === 'release_desc')>Estreno: más reciente</option>
+                            <option value="release_asc" @selected($sort === 'release_asc')>Estreno: más antiguo</option>
+                            <option value="title" @selected($sort === 'title')>Título</option>
+                            <option value="rating_desc" @selected($sort === 'rating_desc')>Mejor puntuación</option>
+                            <option value="rating_asc" @selected($sort === 'rating_asc')>Peor puntuación</option>
+                        </select>
+                    </label>
                 </div>
 
                 <div class="catalog-grid">

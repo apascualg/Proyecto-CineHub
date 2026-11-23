@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CatalogController;
@@ -27,9 +29,29 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');
     Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+
+    Route::get('/forgot-password', [PasswordResetController::class, 'create'])
+        ->name('password.request');
+    Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLink'])
+        ->name('password.email');
+    Route::get('/reset-password/{token}', [PasswordResetController::class, 'edit'])
+        ->name('password.reset');
+    Route::post('/reset-password', [PasswordResetController::class, 'update'])
+        ->name('password.update');
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('/email/verify', [EmailVerificationController::class, 'notice'])
+        ->name('verification.notice');
+    Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])
+        ->middleware('signed')
+        ->name('verification.verify');
+    Route::post('/email/verification-notification', [EmailVerificationController::class, 'resend'])
+        ->middleware('throttle:6,1')
+        ->name('verification.send');
+});
+
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [CatalogController::class, 'index'])
         ->name('dashboard');
     Route::get('/surprise', [CatalogController::class, 'surprise'])
@@ -81,6 +103,8 @@ Route::middleware(['auth', 'admin'])
         Route::resource('people', PersonController::class)->except('show');
         Route::resource('credits', CreditController::class)->except('show');
         Route::resource('users', UserController::class)->only(['index', 'edit', 'update']);
+        Route::patch('reviews/bulk-status', [ReviewController::class, 'bulkStatus'])
+            ->name('reviews.bulk-status');
         Route::resource('reviews', ReviewController::class)->only(['index', 'update', 'destroy']);
         Route::patch('reviews/{review}/status', [ReviewController::class, 'updateStatus'])
             ->name('reviews.status');

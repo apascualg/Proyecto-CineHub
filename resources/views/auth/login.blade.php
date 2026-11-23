@@ -26,6 +26,8 @@
             <button type="submit" class="auth-form__submit">Entrar</button>
         </form>
 
+        <p class="auth-card__footer"><a href="{{ route('password.request') }}">¿Has olvidado tu contraseña?</a></p>
+
         <p class="auth-card__footer">¿No tienes cuenta? <a href="{{ route('register') }}">Regístrate</a></p>
     </section>
 @endsection

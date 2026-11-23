@@ -18,7 +18,24 @@
             <div class="admin-stat"><strong>{{ $totalPeople }}</strong><span>Personas</span></div>
             <div class="admin-stat"><strong>{{ $totalUsers }}</strong><span>Usuarios</span></div>
             <div class="admin-stat"><strong>{{ $pendingReviews }}</strong><span>Reseñas pendientes</span></div>
+            <div class="admin-stat"><strong>{{ $approvedReviews }}</strong><span>Reseñas aprobadas</span></div>
+            <div class="admin-stat"><strong>{{ $hiddenReviews }}</strong><span>Reseñas ocultas</span></div>
+            <div class="admin-stat"><strong>{{ $totalRatings }}</strong><span>Valoraciones</span></div>
+            <div class="admin-stat"><strong>{{ $totalComments }}</strong><span>Comentarios</span></div>
+            <div class="admin-stat"><strong>{{ $averageRating ? number_format($averageRating, 1) : '—' }}</strong><span>Nota media</span></div>
         </div>
+
+        <section class="admin-top-rated">
+            <h2>Títulos mejor valorados</h2>
+            @forelse ($topRatedTitles as $title)
+                <div class="admin-top-rated__item">
+                    <a href="{{ route('titles.show', $title) }}">{{ $title->title }}</a>
+                    <strong>{{ number_format($title->ratings_avg_score, 1) }}/10</strong>
+                </div>
+            @empty
+                <p>Todavía no hay valoraciones.</p>
+            @endforelse
+        </section>
 
         <div class="admin-actions">
             <a class="admin-action" href="{{ route('admin.titles.index') }}">Gestionar títulos</a>

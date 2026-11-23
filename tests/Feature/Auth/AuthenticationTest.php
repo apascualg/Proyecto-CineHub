@@ -19,7 +19,7 @@ class AuthenticationTest extends TestCase
             'password_confirmation' => 'password123',
         ]);
 
-        $response->assertRedirect(route('dashboard'));
+        $response->assertRedirect(route('verification.notice'));
         $this->assertAuthenticated();
         $this->assertDatabaseHas('users', [
             'email' => 'new@example.com',

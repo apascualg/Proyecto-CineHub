@@ -123,7 +123,7 @@ class CatalogFilterTest extends TestCase
 
     public function test_it_paginates_catalog_results_and_preserves_filters(): void
     {
-        Title::factory()->published()->count(13)->create([
+        Title::factory()->published()->count(105)->create([
             'type' => 'movie',
             'title' => fake()->unique()->sentence(3).' Pagination',
             'release_date' => '2024-01-01',
@@ -137,9 +137,19 @@ class CatalogFilterTest extends TestCase
 
         $response->assertOk()
             ->assertViewHas('titles', function ($titles): bool {
-                return $titles->count() === 1
+                return $titles->count() === 5
                     && $titles->every(fn (Title $title): bool => $title->type === 'movie');
             });
         $response->assertSee('type=movie');
+    }
+
+    public function test_it_can_sort_catalog_results_by_title(): void
+    {
+        Title::factory()->published()->create(['title' => 'Zulu']);
+        Title::factory()->published()->create(['title' => 'Alpha']);
+
+        $this->get(route('dashboard', ['sort' => 'title']))
+            ->assertOk()
+            ->assertViewHas('titles', fn ($titles): bool => $titles->first()->title === 'Alpha');
     }
 }

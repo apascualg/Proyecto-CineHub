@@ -13,11 +13,24 @@
             </select>
             <button type="submit">Filtrar</button>
         </form>
+        <form id="bulk-review-form" method="POST" action="{{ route('admin.reviews.bulk-status') }}" class="admin-review-filter">
+            @csrf
+            @method('PATCH')
+            <label for="bulk-status">Acción para las reseñas seleccionadas</label>
+            <select id="bulk-status" name="status">
+                <option value="pending">Pendiente</option>
+                <option value="approved">Aprobar</option>
+                <option value="hidden">Ocultar</option>
+                <option value="rejected">Rechazar</option>
+            </select>
+            <button type="submit">Aplicar</button>
+        </form>
         <div class="admin-table-wrap"><table class="admin-table">
-            <thead><tr><th>Título</th><th>Usuario</th><th>Reseña</th><th>Estado</th><th>Acciones</th></tr></thead>
+            <thead><tr><th>Seleccionar</th><th>Título</th><th>Usuario</th><th>Reseña</th><th>Estado</th><th>Acciones</th></tr></thead>
             <tbody>
                 @forelse ($reviews as $review)
                     <tr>
+                        <td><input type="checkbox" name="review_ids[]" value="{{ $review->id }}" form="bulk-review-form"></td>
                         <td>{{ $review->title->title }}</td><td>{{ $review->user->name }}</td><td><strong>{{ $review->headline ?: 'Sin título' }}</strong><br>{{ $review->body }}</td>
                         <td><span class="admin-status admin-status--{{ $review->status }}">{{ [
                             'pending' => 'Pendiente',
@@ -31,7 +44,7 @@
                         </td>
                     </tr>
                 @empty
-                    <tr><td colspan="5">No hay reseñas.</td></tr>
+                    <tr><td colspan="6">No hay reseñas.</td></tr>
                 @endforelse
             </tbody>
         </table></div>

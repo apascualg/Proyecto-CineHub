@@ -15,6 +15,7 @@ class UsersSeeder extends Seeder
                 'name' => 'CineHub Admin',
                 'role' => 'admin',
                 'password' => 'password',
+                'email_verified_at' => now(),
             ],
         );
 
@@ -24,6 +25,7 @@ class UsersSeeder extends Seeder
                 'name' => 'CineHub Root',
                 'role' => 'admin',
                 'password' => 'root',
+                'email_verified_at' => now(),
             ],
         );
 
@@ -33,6 +35,7 @@ class UsersSeeder extends Seeder
                 'name' => 'CineHub User',
                 'role' => 'user',
                 'password' => 'password',
+                'email_verified_at' => now(),
             ],
         );
     }
