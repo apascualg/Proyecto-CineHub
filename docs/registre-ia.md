@@ -184,3 +184,91 @@
 | Prompt | Lo de las tarjetas visuales, el perfil completo, los filtros de administración, el botón «Sorpréndeme», las listas personalizadas y las estadísticas personales quiero implementarlo. |
 | Resultat | Es van afegir targetes i estadístiques al perfil, filtres de moderació, el botó «Sorpréndeme», llistes personalitzades i la seva gestió. També es van afegir proves específiques i la suite completa supera 40 tests amb 153 assertions. |
 | Commit / PR | |
+
+## Registre 18
+
+| Camp | Contingut |
+|---|---|
+| Data i autor | 2026-11-23 — Adrián |
+| Eina | GitHub Copilot |
+| Objectiu | Millorar la portada pública de CineHub i ajustar-ne els elements visuals a les indicacions de disseny. |
+| Prompt | Resum dels prompts: adapta la portada a l'estil indicat i corregeix la posició del botó i dels elements circulars perquè quedin sencers dins del seu contenidor i no es moguin en passar-hi el cursor. |
+| Resultat | Es van actualitzar la vista de benvinguda i els estils de la portada. Després de les correccions, el botó i l'element circular queden dins dels seus contenidors i l'estat hover no desplaça el contingut lateralment. |
+| Commit / PR | |
+
+## Registre 19
+
+| Camp | Contingut |
+|---|---|
+| Data i autor | 2026-11-23 — Adrián |
+| Eina | GitHub Copilot |
+| Objectiu | Permetre que les persones no autenticades explorin el catàleg, mantenint limitades les funcions que requereixen iniciar sessió. |
+| Prompt | Resum dels prompts: permet que qualsevol visitant consulti i explori el catàleg amb filtres bàsics; mostra un avís per iniciar sessió per desbloquejar la resta de filtres i les funcions d'usuari, com valorar pel·lícules. |
+| Resultat | Es va fer públic l'accés a l'exploració i es van mantenir restringits als usuaris autenticats els filtres avançats i les interaccions personals. Es va actualitzar el missatge d'inici de sessió i es van afegir proves de l'accés públic i de les restriccions. |
+| Commit / PR | |
+
+## Registre 20
+
+| Camp | Contingut |
+|---|---|
+| Data i autor | 2026-11-23 — Adrián |
+| Eina | GitHub Copilot |
+| Objectiu | Augmentar el contingut visible a la portada i aclarir la invitació a iniciar sessió. |
+| Prompt | Resum dels prompts: mostra vuit pel·lícules a cada secció de la portada i substitueix el títol genèric de l'avís per una invitació clara a iniciar sessió per desbloquejar filtres i altres funcionalitats. |
+| Resultat | Es va augmentar a vuit el nombre de títols de cada secció i es va actualitzar el text de promoció de l'autenticació, mantenint-ne la descripció existent. |
+| Commit / PR | |
+
+## Registre 21
+
+| Camp | Contingut |
+|---|---|
+| Data i autor | 2026-11-24 — Adrián |
+| Eina | GitHub Copilot |
+| Objectiu | Eliminar les dades de demostració obsoletes i conservar la importació del catàleg des de TMDB. |
+| Prompt | Elimina els seeders de prova originals; el seeding del catàleg ha d'utilitzar les dades de TMDB. |
+| Resultat | Es van retirar els seeders de demostració i es va ajustar `DatabaseSeeder` perquè utilitzi el seeder de TMDB. També es van actualitzar les proves i la documentació relacionades amb el seeding. |
+| Commit / PR | |
+
+## Registre 22
+
+| Camp | Contingut |
+|---|---|
+| Data i autor | 2026-11-24 — Adrián |
+| Eina | GitHub Copilot |
+| Objectiu | Carregar el catàleg des de TMDB de manera progressiva en lloc d'importar-lo tot durant el seeding inicial. |
+| Prompt | Resum dels prompts: mostra 102 títols per pàgina i, en avançar pel catàleg, importa nous lots des de TMDB en segon pla; mantén preparada la càrrega de les pàgines següents sense haver d'importar tot el catàleg d'una vegada. |
+| Resultat | Es va implementar una importació incremental amb cursor persistent, deduplicació i treballs de cua. La càrrega automàtica encadena lots de 102 títols i es limita a 2040 títols publicats. Es van afegir proves per a la importació, la cua i els límits del catàleg. |
+| Commit / PR | |
+
+## Registre 23
+
+| Camp | Contingut |
+|---|---|
+| Data i autor | 2026-11-24 — Adrián |
+| Eina | GitHub Copilot |
+| Objectiu | Fer més clara i coherent la navegació entre les pàgines del catàleg. |
+| Prompt | Resum dels prompts: localitza els textos dels controls de paginació, destaca la pàgina actual i mostra una finestra de tres pàgines quan n'hi ha menys de cinc o de fins a cinc pàgines quan el catàleg creix, tant a la part superior com a la inferior. |
+| Resultat | Es van ajustar els textos i els estils de paginació, es va marcar la pàgina actual i es va implementar la finestra lliscant de pàgines als dos extrems del catàleg. Les proves cobreixen els casos amb menys de cinc pàgines i amb cinc pàgines o més. |
+| Commit / PR | |
+
+## Registre 24
+
+| Camp | Contingut |
+|---|---|
+| Data i autor | 2026-11-24 — Adrián |
+| Eina | GitHub Copilot |
+| Objectiu | Corregir els errors de càrrega incremental i mantenir l'ampliació automàtica del catàleg fins al límit establert. |
+| Prompt | Resum dels prompts: investiga per què avançar de pàgina no afegeix nous títols, corregeix els errors de càrrega, mantén dues pàgines de marge i continua carregant automàticament fins a 2040 títols mentre la web estigui oberta. |
+| Resultat | Es van traslladar les importacions a treballs de cua per evitar els temps d'espera i bloquejos de la càrrega síncrona. Es va corregir la continuació dels lots, es va limitar l'autocàrrega a 20 pàgines i es van verificar 2040 títols publicats amb la cua sense treballs pendents ni fallits. |
+| Commit / PR | |
+
+## Registre 25
+
+| Camp | Contingut |
+|---|---|
+| Data i autor | 2026-11-24 — Adrián |
+| Eina | GitHub Copilot |
+| Objectiu | Mostrar el rang de resultats de la pàgina actual i validar-ne el format. |
+| Prompt | Mostra un resum com «Mostrant del resultat 204 al 306 sobre 2040 resultats» al catàleg i indica quan no hi ha resultats. |
+| Resultat | Es va afegir el rang calculat a partir de la paginació i el missatge per al catàleg buit. Es va ajustar la prova per verificar el text sense dependre dels salts de línia del HTML; `php artisan test tests/Feature/CatalogFilterTest.php` va superar 9 proves i 26 assertions. |
+| Commit / PR | |
