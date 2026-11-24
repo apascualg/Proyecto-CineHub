@@ -9,13 +9,13 @@
     <body class="cine-app">
         <header class="cine-header">
             <div class="cine-header__inner">
-                <a href="{{ url('/') }}" class="cine-brand" aria-label="CineHub inicio">
+                <a href="{{ route('home') }}" class="cine-brand" aria-label="CineHub inicio">
                     <span class="cine-brand__cine">Cine</span><span class="cine-brand__hub">Hub</span>
                 </a>
 
                 <nav class="cine-nav" aria-label="Navegación principal">
                     @auth
-                        <a href="{{ route('dashboard') }}">Inicio</a>
+                        <a href="{{ route('dashboard') }}">Explorar</a>
                         <a href="{{ route('profile.edit') }}">Perfil</a>
                         <a href="{{ route('lists.index') }}">Mis listas</a>
                         @if (auth()->user()->isAdmin())
@@ -27,7 +27,7 @@
                             <button type="submit">Cerrar sesión</button>
                         </form>
                     @else
-                        <a href="{{ route('catalog.explore') }}">Explorar</a>
+                        <a href="{{ route('dashboard') }}">Explorar</a>
                         <a href="{{ route('login') }}">Iniciar sesión</a>
                         <a href="{{ route('register') }}" class="cine-nav__button">Registrarse</a>
                     @endauth

@@ -15,7 +15,7 @@ class CatalogController extends Controller
         $featured = Title::query()
             ->where('status', 'published')
             ->with(['genres'])
-            ->withAvg('ratings', 'score')
+            ->withRatingsSummary()
             ->latest('release_date')
             ->limit(6)
             ->get();
@@ -23,7 +23,7 @@ class CatalogController extends Controller
         $topRated = Title::query()
             ->where('status', 'published')
             ->with(['genres'])
-            ->withAvg('ratings', 'score')
+            ->withRatingsSummary()
             ->havingRaw('ratings_avg_score IS NOT NULL')
             ->orderByDesc('ratings_avg_score')
             ->limit(6)
@@ -32,28 +32,11 @@ class CatalogController extends Controller
         return view('welcome', compact('featured', 'topRated'));
     }
 
-    public function publicIndex(Request $request): View
-    {
-        $filters = $this->validatedFilters($request);
-        $sort = $request->validate([
-            'sort' => ['nullable', 'in:release_desc,release_asc,title,rating_desc,rating_asc'],
-        ])['sort'] ?? 'release_desc';
-        $query = $this->catalogQuery($filters);
-        $query = match ($sort) {
-            'release_asc' => $query->orderBy('release_date'),
-            'title' => $query->orderBy('title'),
-            'rating_desc' => $query->orderByRaw('ratings_avg_score IS NULL')->orderByDesc('ratings_avg_score'),
-            'rating_asc' => $query->orderByRaw('ratings_avg_score IS NULL')->orderBy('ratings_avg_score'),
-            default => $query->latest('release_date'),
-        };
-        $titles = $query->paginate(100)->withQueryString();
-        $genres = Genre::query()->orderBy('name')->get();
-
-        return view('catalog.public', compact('titles', 'genres', 'filters', 'sort'));
-    }
-
     public function publicShow(Title $title): View
     {
+        $title = Title::query()
+            ->withRatingsSummary()
+            ->findOrFail($title->getKey());
         abort_unless($title->status === 'published', 404);
         $title->load([
             'genres',
@@ -61,7 +44,7 @@ class CatalogController extends Controller
                 ->whereIn('role_type', ['actor', 'director', 'creator'])
                 ->with('person')
                 ->orderBy('billing_order'),
-        ])->loadAvg('ratings', 'score')->loadCount('ratings');
+        ]);
 
         $related = Title::query()
             ->where('status', 'published')
@@ -71,7 +54,7 @@ class CatalogController extends Controller
                 $title->genres->pluck('id'),
             ))
             ->with(['genres'])
-            ->withAvg('ratings', 'score')
+            ->withRatingsSummary()
             ->limit(6)
             ->get();
 
@@ -150,7 +133,7 @@ class CatalogController extends Controller
         $query = Title::query()
             ->where('status', 'published')
             ->with(['genres', 'credits.person'])
-            ->withAvg('ratings', 'score');
+            ->withRatingsSummary();
 
         $query->when($filters['title'] ?? null, function ($query, string $title): void {
             $query->where(function ($query) use ($title): void {

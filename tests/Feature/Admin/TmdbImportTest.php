@@ -7,6 +7,7 @@ use App\Models\Genre;
 use App\Models\Person;
 use App\Models\Title;
 use App\Models\User;
+use App\Services\TmdbTitleImporter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
@@ -49,6 +50,7 @@ class TmdbImportTest extends TestCase
                 'overview' => 'Sinopsis importada desde TMDB.',
                 'release_date' => '2025-01-10',
                 'runtime' => 125,
+                'vote_average' => 6.0,
                 'poster_path' => '/poster.jpg',
                 'backdrop_path' => '/backdrop.jpg',
                 'genres' => [
@@ -93,6 +95,7 @@ class TmdbImportTest extends TestCase
         $this->assertSame('movie', $title->type);
         $this->assertSame('tmdb', $title->source);
         $this->assertSame(125, $title->duration_minutes);
+        $this->assertEquals(6.0, (float) $title->tmdb_rating);
         $this->assertDatabaseHas('genres', ['tmdb_id' => 18, 'name' => 'Drama']);
         $this->assertDatabaseHas('people', ['tmdb_id' => 22, 'name' => 'Actor TMDB']);
         $this->assertDatabaseHas('people', ['tmdb_id' => 33, 'name' => 'Director TMDB']);
@@ -104,6 +107,38 @@ class TmdbImportTest extends TestCase
             'title_id' => $title->id,
             'role_type' => 'director',
         ]);
+    }
+
+    public function test_tmdb_rating_is_weighted_as_the_first_rating(): void
+    {
+        $title = app(TmdbTitleImporter::class)->import([
+            'id' => 777,
+            'title' => 'Nota inicial',
+            'vote_average' => 6.0,
+            'release_date' => '2025-01-10',
+            'runtime' => 100,
+            'genres' => [],
+            'credits' => [],
+        ], 'movie');
+
+        $firstUser = User::factory()->create();
+        $secondUser = User::factory()->create();
+
+        $this->actingAs($firstUser)
+            ->post(route('titles.ratings.store', $title), ['score' => 4])
+            ->assertRedirect(route('titles.show', $title));
+
+        $summary = Title::query()->withRatingsSummary()->findOrFail($title->id);
+        $this->assertEquals(5.0, (float) $summary->ratings_avg_score);
+        $this->assertSame(2, (int) $summary->ratings_count);
+
+        $this->actingAs($secondUser)
+            ->post(route('titles.ratings.store', $title), ['score' => 8])
+            ->assertRedirect(route('titles.show', $title));
+
+        $summary = Title::query()->withRatingsSummary()->findOrFail($title->id);
+        $this->assertEquals(6.0, (float) $summary->ratings_avg_score);
+        $this->assertSame(3, (int) $summary->ratings_count);
     }
 
     public function test_reimporting_a_tmdb_title_updates_it_without_duplicates(): void

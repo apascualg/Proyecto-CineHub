@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Services\TmdbService;
 use App\Services\TmdbTitleImporter;
 use Illuminate\Database\Seeder;
+use RuntimeException;
 use Throwable;
 
 class TmdbCatalogSeeder extends Seeder
@@ -23,7 +24,18 @@ class TmdbCatalogSeeder extends Seeder
 
     public function run(): void
     {
-        $tmdb = app(TmdbService::class);
+        if (app()->environment('testing')) {
+            return;
+        }
+
+        try {
+            $tmdb = app(TmdbService::class);
+        } catch (RuntimeException $exception) {
+            $this->command?->warn($exception->getMessage());
+
+            return;
+        }
+
         $importer = app(TmdbTitleImporter::class);
 
         $this->importTopRated($tmdb, $importer, 'movie', 50);

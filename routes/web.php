@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [CatalogController::class, 'home'])
     ->name('home');
-Route::get('/explore', [CatalogController::class, 'publicIndex'])
+Route::get('/explore', fn () => redirect()->route('dashboard'))
     ->name('catalog.explore');
 Route::get('/explore/{title}', [CatalogController::class, 'publicShow'])
     ->name('catalog.show');

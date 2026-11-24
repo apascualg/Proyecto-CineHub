@@ -29,38 +29,44 @@ class TmdbTitleImporter
             $existing = Title::where('tmdb_id', $tmdbId)->first();
             $slug = $existing?->slug ?? $this->uniqueSlug($titleValue);
 
+            $attributes = [
+                'source' => 'tmdb',
+                'type' => $type,
+                'title' => $titleValue,
+                'original_title' => $originalTitle,
+                'slug' => $slug,
+                'synopsis' => $data['overview'] ?? null,
+                'release_date' => $releaseDate ?: null,
+                'duration_minutes' => $type === 'movie'
+                    ? ($data['runtime'] ?: null)
+                    : ($data['episode_run_time'][0] ?? null),
+                'seasons_count' => $type === 'series'
+                    ? ($data['number_of_seasons'] ?? null)
+                    : null,
+                'episodes_count' => $type === 'series'
+                    ? ($data['number_of_episodes'] ?? null)
+                    : null,
+                'poster_path' => isset($data['poster_path'])
+                    ? rtrim(config('tmdb.image_base_url'), '/').'/w500'.$data['poster_path']
+                    : null,
+                'backdrop_path' => isset($data['backdrop_path'])
+                    ? rtrim(config('tmdb.image_base_url'), '/').'/original'.$data['backdrop_path']
+                    : null,
+                'trailer_url' => null,
+                'streaming_providers' => $this->streamingProviders(
+                    $data,
+                    $titleValue,
+                ),
+                'status' => 'published',
+            ];
+
+            if (array_key_exists('vote_average', $data)) {
+                $attributes['tmdb_rating'] = $this->tmdbRating($data['vote_average']);
+            }
+
             $title = Title::updateOrCreate(
                 ['tmdb_id' => $tmdbId],
-                [
-                    'source' => 'tmdb',
-                    'type' => $type,
-                    'title' => $titleValue,
-                    'original_title' => $originalTitle,
-                    'slug' => $slug,
-                    'synopsis' => $data['overview'] ?? null,
-                    'release_date' => $releaseDate ?: null,
-                    'duration_minutes' => $type === 'movie'
-                        ? ($data['runtime'] ?: null)
-                        : ($data['episode_run_time'][0] ?? null),
-                    'seasons_count' => $type === 'series'
-                        ? ($data['number_of_seasons'] ?? null)
-                        : null,
-                    'episodes_count' => $type === 'series'
-                        ? ($data['number_of_episodes'] ?? null)
-                        : null,
-                    'poster_path' => isset($data['poster_path'])
-                        ? rtrim(config('tmdb.image_base_url'), '/').'/w500'.$data['poster_path']
-                        : null,
-                    'backdrop_path' => isset($data['backdrop_path'])
-                        ? rtrim(config('tmdb.image_base_url'), '/').'/original'.$data['backdrop_path']
-                        : null,
-                    'trailer_url' => null,
-                    'streaming_providers' => $this->streamingProviders(
-                        $data,
-                        $titleValue,
-                    ),
-                    'status' => 'published',
-                ],
+                $attributes,
             );
 
             $genreIds = collect($data['genres'] ?? [])
@@ -139,6 +145,19 @@ class TmdbTitleImporter
                 'billing_order' => $billingOrder,
             ],
         );
+    }
+
+    private function tmdbRating(mixed $rating): ?float
+    {
+        if (! is_numeric($rating)) {
+            return null;
+        }
+
+        $rating = (float) $rating;
+
+        return $rating > 0 && $rating <= 10
+            ? round($rating, 2)
+            : null;
     }
 
     private function uniqueSlug(string $title): string

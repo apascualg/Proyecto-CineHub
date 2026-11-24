@@ -15,6 +15,9 @@ class TitleInteractionController extends Controller
 {
     public function show(Title $title): View
     {
+        $title = Title::query()
+            ->withRatingsSummary()
+            ->findOrFail($title->getKey());
         abort_unless($title->status === 'published', 404);
 
         $title->load([
@@ -23,9 +26,7 @@ class TitleInteractionController extends Controller
                 ->where('role_type', 'actor')
                 ->with('person')
                 ->orderBy('billing_order'),
-        ])
-            ->loadAvg('ratings', 'score')
-            ->loadCount('ratings');
+        ]);
 
         $reviews = $title->reviews()
             ->with(['user', 'comments.user'])

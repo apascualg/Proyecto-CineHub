@@ -172,7 +172,9 @@ Si las migraciones ya están ejecutadas:
 php artisan db:seed
 ```
 
-Se crearán usuarios, películas, series, géneros, personas, créditos, valoraciones, reseñas, comentarios y una lista de favoritos.
+Se crearán usuarios, películas locales y datos de demostración. Si `TMDB_API_KEY` o
+`TMDB_API_TOKEN` están configurados en `.env`, también se importará el catálogo
+de películas y series desde TMDB.
 
 Las credenciales de demostración son:
 

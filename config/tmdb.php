@@ -5,13 +5,6 @@ return [
     'image_base_url' => env('TMDB_IMAGE_BASE_URL', 'https://image.tmdb.org/t/p'),
     'token' => env('TMDB_API_TOKEN'),
     'api_key' => env('TMDB_API_KEY'),
-<<<<<<< HEAD
     'ca_bundle' => env('TMDB_CA_BUNDLE', storage_path('certs/cacert.pem')),
-=======
-    'ca_bundle' => env('TMDB_CA_BUNDLE', 'C:\\php\\extras\\ssl\\cacert.pem'),
     'region' => env('TMDB_REGION', 'ES'),
-<<<<<<< HEAD
->>>>>>> 8760778abceaf07eeb06c90952f2a78cfb5c63cd
-=======
->>>>>>> 8760778abceaf07eeb06c90952f2a78cfb5c63cd
 ];

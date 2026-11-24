@@ -30,7 +30,7 @@ class AdminDashboardController extends Controller
             'totalComments' => Comment::count(),
             'averageRating' => Rating::avg('score'),
             'topRatedTitles' => Title::where('status', 'published')
-                ->withAvg('ratings', 'score')
+                ->withRatingsSummary()
                 ->havingRaw('ratings_avg_score IS NOT NULL')
                 ->orderByDesc('ratings_avg_score')
                 ->limit(5)
