@@ -10,20 +10,23 @@
             <p class="catalog-hero__eyebrow">Tu guía de cine y televisión</p>
             <h1>Encuentra tu próxima historia favorita</h1>
             <p>Explora películas y series, consulta sus fichas y descubre qué están valorando otros usuarios.</p>
+        </div>
+        <aside class="home-hero__panel" aria-label="Ventajas de CineHub">
+            <h2>Ventajas de loguearte</h2>
+            <div class="home-hero__benefits">
+                <span title="Guarda películas y series en tus listas">★ Listas personales</span>
+                <span title="Puntúa del 1 al 10 y escribe reseñas">★ Valoraciones y reseñas</span>
+                <span title="Filtra por año, puntuación, director y actor">★ Filtros avanzados</span>
+            </div>
             <div class="home-hero__actions">
-                <a href="{{ route('dashboard') }}" class="surprise-button" title="Descubre películas y series">Explorar catálogo</a>
                 @guest
                     <a href="{{ route('register') }}" class="home-secondary-action" title="Activa listas, valoraciones y filtros avanzados">Crear cuenta</a>
                 @else
                     <a href="{{ route('titles.surprise') }}" class="home-secondary-action" title="Elige una película o serie al azar">Sorpréndeme</a>
                 @endguest
             </div>
-            <div class="home-hero__benefits" aria-label="Ventajas de CineHub">
-                <span title="Guarda películas y series en tus listas">★ Listas personales</span>
-                <span title="Puntúa del 1 al 10 y escribe reseñas">★ Valoraciones y reseñas</span>
-                <span title="Filtra por año, puntuación, director y actor">★ Filtros avanzados</span>
-            </div>
-        </div>
+        </aside>
+        <a href="{{ route('dashboard') }}" class="surprise-button home-hero__catalog-button" title="Descubre películas y series">Explorar catálogo</a>
     </section>
 
     <section class="home-section">
