@@ -16,8 +16,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UsersSeeder::class,
-            DemoInteractionsSeeder::class,
             TmdbCatalogSeeder::class,
+            DemoInteractionsSeeder::class,
+            
         ]);
     }
 }
