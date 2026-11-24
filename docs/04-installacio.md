@@ -49,25 +49,15 @@ Ejecutar:
 php artisan migrate --seed
 ```
 
-El seeding crea usuarios y datos de demostración del catálogo:
+El seeding ejecuta únicamente `TmdbCatalogSeeder`. Importa películas y series desde TMDB si existen credenciales válidas; no crea usuarios ni datos de demostración.
 
-- 2 usuarios.
-- 8 géneros.
-- 10 personas.
-- 8 películas y series.
-- Créditos de directores, creadores y actores.
-- 4 valoraciones.
-- 1 reseña.
-- 1 comentario.
-- 1 lista de favoritos con 3 contenidos.
+La carga automática del catálogo continúa en segundo plano hasta 2040 títulos publicados (20 páginas de 102). Mantén un worker activo con `php artisan queue:work`.
 
 Si las migraciones ya están ejecutadas, se puede ejecutar solo el seeder:
 
 ```bash
 php artisan db:seed
 ```
-
-Los seeders son repetibles y no deberían duplicar los datos principales.
 
 Para reiniciar completamente la base de datos local:
 
@@ -77,15 +67,7 @@ php artisan migrate:fresh --seed
 
 > Este comando elimina todas las tablas y datos existentes. Solo debe utilizarse en desarrollo.
 
-El seeder crea estos usuarios de demostración:
-
-| Rol | Email | Contraseña |
-|---|---|---|
-| Administrador | `admin@cinehub.test` | `password` |
-| Administrador root | `root@cinehub.test` | `root` |
-| Usuario | `user@cinehub.test` | `password` |
-
-Estas credenciales son únicamente para desarrollo local y demostración.
+Las cuentas de demostración han sido eliminadas. Crea usuarios mediante el registro de la aplicación.
 
 ## Ejecutar la aplicación
 

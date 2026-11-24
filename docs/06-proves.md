@@ -39,12 +39,11 @@ php artisan test tests/Feature/Auth tests/Feature/Profile tests/Feature/Database
 - Un usuario puede crear listas personalizadas y gestionar sus títulos.
 - El botón «Sorpréndeme» redirige a un título publicado.
 
-### Seeders y datos de demostración
+### Seeders y datos de prueba
 
-- Se crean los usuarios de demostración.
-- Se crean géneros, personas y títulos.
-- Se crean créditos de directores, creadores y actores.
-- Se crean valoraciones, reseñas, comentarios y listas.
+- Las pruebas utilizan factories y datos creados durante cada caso.
+- `DatabaseSeeder` ejecuta únicamente el seeder de catálogo TMDB.
+- Los datos artificiales de demostración ya no se cargan automáticamente.
 - Un usuario puede crear y eliminar comentarios propios sobre reseñas visibles.
 - Un usuario no puede comentar reseñas pendientes de otra persona ni borrar comentarios ajenos.
 - Un administrador puede consultar, aprobar, ocultar y eliminar reseñas.

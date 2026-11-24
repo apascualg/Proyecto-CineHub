@@ -55,27 +55,6 @@ Las funcionalidades del catálogo administrativo se incorporarán en las siguien
 ![administracion](/docs/img/administracion.png)
 
 
-## Usuarios de demostración
+Las cuentas disponibles se crean mediante el registro o por un administrador. No existen usuarios de demostración preconfigurados.
 
-| Rol | Email | Contraseña |
-|---|---|---|
-| Administrador | `admin@cinehub.test` | `password` |
-| Administrador root | `root@cinehub.test` | `root` |
-| Usuario | `user@cinehub.test` | `password` |
-
-Estas credenciales no deben utilizarse fuera del entorno local.
-
-## Datos de demostración
-
-Al ejecutar `php artisan migrate --seed` o `php artisan db:seed`, CineHub prepara datos para probar el catálogo:
-
-- Películas y series publicadas.
-- Un contenido en estado borrador para probar filtros.
-- Géneros.
-- Directores, creadores y actores.
-- Valoraciones.
-- Una reseña aprobada.
-- Un comentario.
-- Una lista de favoritos con contenidos.
-
-Estos datos permiten comprobar la navegación del catálogo y las relaciones de la ficha antes de introducir contenido desde el panel de administración.
+Al ejecutar `php artisan migrate --seed` o `php artisan db:seed`, CineHub importa el catálogo desde TMDB cuando está configurado. No se crean datos artificiales ni cuentas de demostración.

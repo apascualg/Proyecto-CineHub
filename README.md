@@ -158,9 +158,9 @@ Se podrá utilizar la API de TMDB para importar datos cinematográficos. En ese 
 
 La integración con TMDB será opcional y no constituye una función de inteligencia artificial.
 
-## Datos de demostración
+## Importación de catálogo
 
-La aplicación incluye seeders para preparar una base de datos local completa. Después de configurar MySQL, ejecutar:
+La aplicación puede importar el catálogo desde TMDB. Después de configurar MySQL y las credenciales de TMDB, ejecutar:
 
 ```bash
 php artisan migrate --seed
@@ -172,16 +172,12 @@ Si las migraciones ya están ejecutadas:
 php artisan db:seed
 ```
 
-Se crearán usuarios, películas locales y datos de demostración. Si `TMDB_API_KEY` o
+Si `TMDB_API_KEY` o
 `TMDB_API_TOKEN` están configurados en `.env`, también se importará el catálogo
 de películas y series desde TMDB.
 
-Las credenciales de demostración son:
+Al abrir inicio o catálogo, CineHub importa títulos automáticamente en lotes de 102 hasta alcanzar un máximo de 2040. La importación se ejecuta en segundo plano. Mantén un worker de cola activo:
 
-| Rol | Email | Contraseña |
-|---|---|---|
-| Administrador | `admin@cinehub.test` | `password` |
-| Administrador root | `root@cinehub.test` | `root` |
-| Usuario | `user@cinehub.test` | `password` |
-
-Estas credenciales solo deben utilizarse en el entorno local.
+```bash
+php artisan queue:work
+```

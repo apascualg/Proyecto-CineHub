@@ -15,10 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            UsersSeeder::class,
             TmdbCatalogSeeder::class,
-            DemoInteractionsSeeder::class,
-            
         ]);
     }
 }

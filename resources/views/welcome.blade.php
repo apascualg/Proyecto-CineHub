@@ -12,7 +12,7 @@
             <p>Explora películas y series, consulta sus fichas y descubre qué están valorando otros usuarios.</p>
         </div>
         <aside class="home-hero__panel" aria-label="Ventajas de CineHub">
-            <h2>Ventajas de loguearte</h2>
+            <h2>Ventajas de iniciar sesión</h2>
             <div class="home-hero__benefits">
                 <span title="Guarda películas y series en tus listas">★ Listas personales</span>
                 <span title="Puntúa del 1 al 10 y escribe reseñas">★ Valoraciones y reseñas</span>
@@ -26,7 +26,7 @@
                 @endguest
             </div>
         </aside>
-        <a href="{{ route('dashboard') }}" class="surprise-button home-hero__catalog-button" title="Descubre películas y series">Explorar catálogo</a>
+        <a href="{{ route('catalog.explore') }}" class="surprise-button home-hero__catalog-button" title="Descubre películas y series">Explorar catálogo</a>
     </section>
 
     <section class="home-section">
@@ -35,9 +35,9 @@
                 <p class="catalog-hero__eyebrow">Novedades</p>
                 <h2>Últimos títulos</h2>
             </div>
-            <a href="{{ route('dashboard') }}">Ver todo</a>
+            <a href="{{ route('catalog.explore') }}">Ver todo</a>
         </div>
-        <div class="catalog-grid">
+        <div class="catalog-grid catalog-grid--home">
             @forelse ($featured as $title)
                 <a href="{{ route(auth()->check() ? 'titles.show' : 'catalog.show', $title) }}" class="movie-card__link">
                     <article class="movie-card">
@@ -69,7 +69,7 @@
                 <h2>Mejor valorados</h2>
             </div>
         </div>
-        <div class="catalog-grid">
+        <div class="catalog-grid catalog-grid--home">
             @foreach ($topRated as $title)
                 <a href="{{ route(auth()->check() ? 'titles.show' : 'catalog.show', $title) }}" class="movie-card__link">
                     <article class="movie-card">

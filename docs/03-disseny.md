@@ -70,7 +70,7 @@ El alias se registra en `bootstrap/app.php`:
 - El logout invalida la sesión y regenera el token CSRF.
 - Las rutas administrativas se protegen en el servidor.
 
-## Factories y datos de demostración
+## Factories y datos de prueba
 
 Las factories de `database/factories/` permiten generar datos coherentes para pruebas:
 
@@ -86,12 +86,4 @@ Las factories de `database/factories/` permiten generar datos coherentes para pr
 - Comentarios.
 - Relaciones entre títulos y géneros.
 
-El `DatabaseSeeder` ejecuta los seeders en este orden:
-
-1. `UsersSeeder`
-2. `CatalogSeeder`
-3. `DemoInteractionsSeeder`
-
-`CatalogSeeder` crea géneros, personas, películas, series y créditos. `DemoInteractionsSeeder` crea valoraciones, reseñas, comentarios y una lista de favoritos.
-
-Los seeders utilizan operaciones como `updateOrCreate`, `firstOrCreate` y `syncWithoutDetaching` para poder ejecutarse varias veces sin duplicar los datos principales.
+El `DatabaseSeeder` ejecuta únicamente `TmdbCatalogSeeder`. Este seeder obtiene películas y series desde TMDB y utiliza operaciones idempotentes para actualizar el catálogo sin duplicar títulos.

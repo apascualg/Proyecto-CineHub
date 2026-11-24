@@ -830,6 +830,10 @@ select {
     gap: 1.25rem;
 }
 
+.catalog-grid--home {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .movie-card {
     height: 100%;
     overflow: hidden;
@@ -946,7 +950,53 @@ select {
 }
 
 .catalog-pagination {
-    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 1.25rem 0 0;
+}
+
+.catalog-pagination--top {
+    margin: 0 0 1.25rem;
+}
+
+.catalog-pagination__link {
+    display: inline-flex;
+    min-width: 42px;
+    height: 42px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.75rem;
+    border: 1px solid var(--cine-border);
+    border-radius: 0.55rem;
+    background: #fff;
+    color: var(--cine-text);
+    font-weight: 700;
+    text-decoration: none;
+    transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+}
+
+.catalog-pagination__link:not(.catalog-pagination__link--disabled):hover {
+    border-color: var(--cine-orange);
+    transform: translateY(-1px);
+}
+
+.catalog-pagination__link--active {
+    border-color: var(--cine-black);
+    background: var(--cine-black);
+    color: #fff;
+}
+
+.catalog-pagination__link--disabled {
+    cursor: default;
+    opacity: 0.45;
+}
+
+.catalog-pagination__link--next,
+.catalog-pagination__link[href*="page="]:not(.catalog-pagination__link--active) {
+    white-space: nowrap;
 }
 
 .catalog-pagination svg {

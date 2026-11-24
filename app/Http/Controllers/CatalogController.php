@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\AutoloadTmdbCatalog;
 use App\Models\Genre;
 use App\Models\Title;
 use Illuminate\Http\RedirectResponse;
@@ -12,12 +13,14 @@ class CatalogController extends Controller
 {
     public function home(): View
     {
+        $this->queueCatalogAutoload();
+
         $featured = Title::query()
             ->where('status', 'published')
             ->with(['genres'])
             ->withRatingsSummary()
             ->latest('release_date')
-            ->limit(6)
+            ->limit(8)
             ->get();
 
         $topRated = Title::query()
@@ -26,7 +29,7 @@ class CatalogController extends Controller
             ->withRatingsSummary()
             ->havingRaw('ratings_avg_score IS NOT NULL')
             ->orderByDesc('ratings_avg_score')
-            ->limit(6)
+            ->limit(8)
             ->get();
 
         return view('welcome', compact('featured', 'topRated'));
@@ -88,6 +91,10 @@ class CatalogController extends Controller
             ->inRandomOrder()
             ->firstOrFail();
 
+        if (auth()->guest()) {
+            return redirect()->route('catalog.show', $title);
+        }
+
         return redirect()->route('titles.show', $title);
     }
 
@@ -97,6 +104,8 @@ class CatalogController extends Controller
         $sort = $request->validate([
             'sort' => ['nullable', 'in:release_desc,release_asc,title,rating_desc,rating_asc'],
         ])['sort'] ?? 'release_desc';
+
+        $this->queueCatalogAutoload();
 
         $query = $this->catalogQuery($filters);
 
@@ -108,24 +117,43 @@ class CatalogController extends Controller
             default => $query->latest('release_date'),
         };
 
-        $titles = $query->paginate(100)->withQueryString();
+        $titles = $query->paginate(102)->withQueryString();
         $genres = Genre::query()->orderBy('name')->get();
 
         return view('dashboard', compact('titles', 'genres', 'filters', 'sort'));
     }
 
+    private function queueCatalogAutoload(): void
+    {
+        $hasTmdbCredentials = filled(config('tmdb.token')) || filled(config('tmdb.api_key'));
+
+        if (
+            $hasTmdbCredentials
+            && Title::query()->where('status', 'published')->count() < AutoloadTmdbCatalog::MAX_CATALOG_TITLES
+        ) {
+            AutoloadTmdbCatalog::dispatch();
+        }
+    }
+
     private function validatedFilters(Request $request): array
     {
-        return $request->validate([
+        $rules = [
             'title' => ['nullable', 'string', 'max:255'],
             'type' => ['nullable', 'in:movie,series'],
             'genre' => ['nullable', 'integer', 'exists:genres,id'],
-            'year_from' => ['nullable', 'integer', 'min:1888', 'max:2100'],
-            'year_to' => ['nullable', 'integer', 'min:1888', 'max:2100', 'gte:year_from'],
-            'rating' => ['nullable', 'numeric', 'min:0', 'max:10'],
-            'director' => ['nullable', 'string', 'max:255'],
-            'actor' => ['nullable', 'string', 'max:255'],
-        ]);
+        ];
+
+        if (auth()->check()) {
+            $rules += [
+                'year_from' => ['nullable', 'integer', 'min:1888', 'max:2100'],
+                'year_to' => ['nullable', 'integer', 'min:1888', 'max:2100', 'gte:year_from'],
+                'rating' => ['nullable', 'numeric', 'min:0', 'max:10'],
+                'director' => ['nullable', 'string', 'max:255'],
+                'actor' => ['nullable', 'string', 'max:255'],
+            ];
+        }
+
+        return $request->validate($rules);
     }
 
     private function catalogQuery(array $filters)

@@ -19,13 +19,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [CatalogController::class, 'home'])
     ->name('home');
-Route::get('/explore', fn () => redirect()->route('dashboard'))
+Route::get('/explore', [CatalogController::class, 'index'])
     ->name('catalog.explore');
 Route::get('/explore/{title}', [CatalogController::class, 'publicShow'])
     ->name('catalog.show');
 Route::get('/catalog/suggestions', [CatalogController::class, 'suggestions'])
     ->middleware('auth')
     ->name('catalog.suggestions');
+Route::get('/surprise', [CatalogController::class, 'surprise'])
+    ->name('titles.surprise');
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisteredUserController::class, 'create'])
@@ -49,8 +51,6 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [CatalogController::class, 'index'])
         ->name('dashboard');
-    Route::get('/surprise', [CatalogController::class, 'surprise'])
-        ->name('titles.surprise');
 
     Route::get('/titles/{title}', [TitleInteractionController::class, 'show'])
         ->name('titles.show');

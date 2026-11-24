@@ -8,7 +8,7 @@
             <a href="{{ route('titles.surprise', request()->except('page', 'sort')) }}" class="surprise-button">Sorpréndeme</a>
         </div>
 
-        <form method="GET" action="{{ route('dashboard') }}" class="catalog-search-form">
+        <form method="GET" action="{{ auth()->check() ? route('dashboard') : route('catalog.explore') }}" class="catalog-search-form">
             <div class="catalog-toolbar">
                 <div class="catalog-search">
                     <input type="search" name="title" value="{{ $filters['title'] ?? '' }}" placeholder="Buscar por título" aria-label="Buscar por título" />
@@ -20,7 +20,7 @@
                 <aside class="catalog-filters">
                 <div class="catalog-filters__header">
                     <h2>Filtros</h2>
-                    <a href="{{ route('dashboard') }}" class="catalog-filters__reset">Limpiar</a>
+                    <a href="{{ auth()->check() ? route('dashboard') : route('catalog.explore') }}" class="catalog-filters__reset">Limpiar</a>
                 </div>
 
                 <div class="filter-group">
@@ -42,6 +42,7 @@
                     </select>
                 </div>
 
+                @auth
                 <div class="filter-group">
                     <span class="filter-group__label">Año de estreno</span>
                     <div class="filter-year-range">
@@ -71,11 +72,28 @@
                     <label for="actor">Actor</label>
                     <input id="actor" name="actor" value="{{ $filters['actor'] ?? '' }}" type="text" placeholder="Nombre del actor" />
                 </div>
+                @else
+                <div class="guest-filter-promo">
+                    <span class="guest-filter-promo__badge">Más filtros</span>
+                    <h3>Inicia sesión para desbloquear el resto de filtros y funcionalidades</h3>
+                    <p>Accede a filtros por año, puntuación, director y actor. También podrás valorar películas, escribir reseñas y crear listas personales.</p>
+                    <a href="{{ route('login') }}">Iniciar sesión</a>
+                </div>
+                @endauth
             </aside>
 
             <section class="catalog-results">
                 <div class="catalog-results__topbar">
-                    <p>Mostrando <strong>{{ $titles->total() }}</strong> resultados</p>
+                    <p aria-live="polite">
+                        @if ($titles->total() > 0)
+                            Mostrando del resultado <strong>{{ $titles->firstItem() }}</strong> al
+                            <strong>{{ $titles->lastItem() }}</strong> sobre
+                            <strong>{{ $titles->total() }}</strong>
+                            {{ $titles->total() === 1 ? 'resultado' : 'resultados' }}
+                        @else
+                            No hay resultados que mostrar.
+                        @endif
+                    </p>
                     <label for="catalog-sort">
                         Ordenar
                         <select id="catalog-sort" name="sort" onchange="this.form.submit()">
@@ -88,9 +106,51 @@
                     </label>
                 </div>
 
+                @php
+                    $currentPage = $titles->currentPage();
+                    $lastPage = $titles->lastPage();
+
+                    if ($lastPage <= 3) {
+                        $firstVisiblePage = 1;
+                        $lastVisiblePage = $lastPage;
+                    } elseif ($lastPage <= 4) {
+                        $firstVisiblePage = max(1, min($currentPage - 1, $lastPage - 2));
+                        $lastVisiblePage = $firstVisiblePage + 2;
+                    } else {
+                        $firstVisiblePage = max(1, min($currentPage - 2, $lastPage - 4));
+                        $lastVisiblePage = $firstVisiblePage + 4;
+                    }
+
+                    $visiblePages = $titles->getUrlRange($firstVisiblePage, $lastVisiblePage);
+                @endphp
+
+                @if ($titles->hasPages())
+                    <nav class="catalog-pagination catalog-pagination--top" aria-label="Paginación del catálogo">
+                        @if ($titles->onFirstPage())
+                            <span class="catalog-pagination__link catalog-pagination__link--disabled" aria-disabled="true">Anterior</span>
+                        @else
+                            <a class="catalog-pagination__link" href="{{ $titles->previousPageUrl() }}" rel="prev">Anterior</a>
+                        @endif
+
+                        @foreach ($visiblePages as $page => $url)
+                            @if ($page === $currentPage)
+                                <span class="catalog-pagination__link catalog-pagination__link--active" aria-current="page">{{ $page }}</span>
+                            @else
+                                <a class="catalog-pagination__link" href="{{ $url }}">{{ $page }}</a>
+                            @endif
+                        @endforeach
+
+                        @if ($titles->hasMorePages())
+                            <a class="catalog-pagination__link catalog-pagination__link--next" href="{{ $titles->nextPageUrl() }}" rel="next">Siguiente</a>
+                        @else
+                            <span class="catalog-pagination__link catalog-pagination__link--disabled" aria-disabled="true">Siguiente</span>
+                        @endif
+                    </nav>
+                @endif
+
                 <div class="catalog-grid">
                     @forelse ($titles as $title)
-                        <a href="{{ route('titles.show', $title) }}" class="movie-card__link">
+                        <a href="{{ route(auth()->check() ? 'titles.show' : 'catalog.show', $title) }}" class="movie-card__link">
                         <article class="movie-card">
                             @if ($title->poster_path)
                                 <img class="movie-card__poster movie-card__poster--image" src="{{ $title->poster_path }}" alt="Portada de {{ $title->title }}" loading="lazy">
@@ -111,7 +171,29 @@
                         <p class="catalog-empty">No hemos encontrado títulos con esos filtros.</p>
                     @endforelse
                 </div>
-                <div class="catalog-pagination">{{ $titles->links() }}</div>
+                @if ($titles->hasPages())
+                    <nav class="catalog-pagination catalog-pagination--bottom" aria-label="Paginación del catálogo">
+                        @if ($titles->onFirstPage())
+                            <span class="catalog-pagination__link catalog-pagination__link--disabled" aria-disabled="true">Anterior</span>
+                        @else
+                            <a class="catalog-pagination__link" href="{{ $titles->previousPageUrl() }}" rel="prev">Anterior</a>
+                        @endif
+
+                        @foreach ($visiblePages as $page => $url)
+                            @if ($page === $currentPage)
+                                <span class="catalog-pagination__link catalog-pagination__link--active" aria-current="page">{{ $page }}</span>
+                            @else
+                                <a class="catalog-pagination__link" href="{{ $url }}">{{ $page }}</a>
+                            @endif
+                        @endforeach
+
+                        @if ($titles->hasMorePages())
+                            <a class="catalog-pagination__link catalog-pagination__link--next" href="{{ $titles->nextPageUrl() }}" rel="next">Siguiente</a>
+                        @else
+                            <span class="catalog-pagination__link catalog-pagination__link--disabled" aria-disabled="true">Siguiente</span>
+                        @endif
+                    </nav>
+                @endif
             </section>
             </div>
         </form>

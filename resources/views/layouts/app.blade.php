@@ -27,7 +27,7 @@
                             <button type="submit">Cerrar sesión</button>
                         </form>
                     @else
-                        <a href="{{ route('dashboard') }}">Explorar</a>
+                        <a href="{{ route('catalog.explore') }}">Explorar</a>
                         <a href="{{ route('login') }}">Iniciar sesión</a>
                         <a href="{{ route('register') }}" class="cine-nav__button">Registrarse</a>
                     @endauth
