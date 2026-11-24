@@ -814,6 +814,16 @@ select {
     background-position: center;
 }
 
+.movie-card__poster--image {
+    display: block;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    aspect-ratio: auto;
+    margin-inline: auto;
+    object-fit: contain;
+}
+
 .poster--one {
     background: linear-gradient(135deg, #2d2d2d, #7b5b36 45%, #d4b36c);
 }
@@ -980,7 +990,7 @@ select {
 
 .title-detail__header {
     display: grid;
-    grid-template-columns: 260px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
     gap: 2rem;
     padding: 1.5rem;
     background: var(--cine-black);
@@ -990,11 +1000,20 @@ select {
 }
 
 .title-detail__poster {
-    min-height: 360px;
+    display: block;
+    max-width: 100%;
+    max-height: 360px;
+    width: auto;
+    height: auto;
+    justify-self: center;
+    align-self: center;
     border-radius: 0.65rem;
-    background-position: center;
-    background-size: cover;
-    background-image: linear-gradient(135deg, #242424, #f4a400 48%, #f5f4f1);
+    object-fit: contain;
+}
+
+.title-detail__poster--fallback {
+    height: 360px;
+    aspect-ratio: 2 / 3;
 }
 
 .title-detail__intro {
@@ -1084,10 +1103,14 @@ select {
 }
 
 .cast-card__photo {
+    display: block;
     flex: 0 0 82px;
+    width: 82px;
+    height: 104px;
     min-height: 104px;
     background-position: center;
     background-size: cover;
+    object-fit: cover;
 }
 
 .cast-card__photo--fallback {
@@ -1922,7 +1945,11 @@ select {
     }
 
     .title-detail__poster {
-        min-height: 280px;
+        max-height: 280px;
+    }
+
+    .title-detail__poster--fallback {
+        height: 280px;
     }
 
     .lists-grid,

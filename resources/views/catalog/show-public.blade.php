@@ -6,7 +6,11 @@
     <article class="title-detail">
         <a href="{{ route('catalog.explore') }}" class="title-detail__back">Volver al catálogo</a>
         <header class="title-detail__header">
-            <div class="title-detail__poster @if (!$title->poster_path) poster--fallback @endif" @if ($title->poster_path) style="background-image: url('{{ $title->poster_path }}')" @endif></div>
+            @if ($title->poster_path)
+                <img class="title-detail__poster" src="{{ $title->poster_path }}" alt="Portada de {{ $title->title }}">
+            @else
+                <div class="title-detail__poster title-detail__poster--fallback poster--fallback" aria-hidden="true"></div>
+            @endif
             <div class="title-detail__intro">
                 <span class="movie-card__type">{{ $title->type === 'series' ? 'Serie' : 'Película' }}</span>
                 <h1>{{ $title->title }}</h1>
@@ -57,6 +61,13 @@
                 <div class="cast-list">
                     @foreach ($title->credits->take(8) as $credit)
                         <article class="cast-card">
+                            @if ($credit->person->photo_path)
+                                <img class="cast-card__photo" src="{{ $credit->person->photo_path }}" alt="Foto de {{ $credit->person->name }}" loading="lazy">
+                            @else
+                                <div class="cast-card__photo cast-card__photo--fallback" role="img" aria-label="Sin foto de {{ $credit->person->name }}">
+                                    {{ collect(explode(' ', trim($credit->person->name)))->filter()->map(fn ($part) => mb_substr($part, 0, 1))->take(2)->join('') }}
+                                </div>
+                            @endif
                             <div class="cast-card__body">
                                 <h3>{{ $credit->person->name }}</h3>
                                 <p>{{ $credit->character_name ?: ucfirst($credit->role_type) }}</p>
@@ -74,7 +85,11 @@
                     @foreach ($related as $item)
                         <a href="{{ route('catalog.show', $item) }}" class="movie-card__link">
                             <article class="movie-card">
-                                <div class="movie-card__poster poster--fallback"></div>
+                                @if ($item->poster_path)
+                                    <img class="movie-card__poster movie-card__poster--image" src="{{ $item->poster_path }}" alt="Portada de {{ $item->title }}" loading="lazy">
+                                @else
+                                    <div class="movie-card__poster movie-card__poster--fallback poster--fallback" aria-hidden="true"></div>
+                                @endif
                                 <div class="movie-card__body">
                                     <h3>{{ $item->title }}</h3>
                                     <p>{{ $item->genres->pluck('name')->join(' · ') }}</p>

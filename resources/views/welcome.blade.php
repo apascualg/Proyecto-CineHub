@@ -38,7 +38,11 @@
             @forelse ($featured as $title)
                 <a href="{{ route(auth()->check() ? 'titles.show' : 'catalog.show', $title) }}" class="movie-card__link">
                     <article class="movie-card">
-                        <div class="movie-card__poster @if (!$title->poster_path) poster--fallback @endif" @if ($title->poster_path) style="background-image: url('{{ $title->poster_path }}')" @endif></div>
+                        @if ($title->poster_path)
+                            <img class="movie-card__poster movie-card__poster--image" src="{{ $title->poster_path }}" alt="Portada de {{ $title->title }}" loading="lazy">
+                        @else
+                            <div class="movie-card__poster poster--fallback" aria-hidden="true"></div>
+                        @endif
                         <div class="movie-card__body">
                             <div class="movie-card__meta">
                                 <span class="movie-card__type">{{ $title->type === 'series' ? 'Serie' : 'Película' }}</span>
@@ -66,7 +70,11 @@
             @foreach ($topRated as $title)
                 <a href="{{ route(auth()->check() ? 'titles.show' : 'catalog.show', $title) }}" class="movie-card__link">
                     <article class="movie-card">
-                        <div class="movie-card__poster @if (!$title->poster_path) poster--fallback @endif" @if ($title->poster_path) style="background-image: url('{{ $title->poster_path }}')" @endif></div>
+                        @if ($title->poster_path)
+                            <img class="movie-card__poster movie-card__poster--image" src="{{ $title->poster_path }}" alt="Portada de {{ $title->title }}" loading="lazy">
+                        @else
+                            <div class="movie-card__poster poster--fallback" aria-hidden="true"></div>
+                        @endif
                         <div class="movie-card__body">
                             <div class="movie-card__meta">
                                 <span class="movie-card__type">{{ $title->type === 'series' ? 'Serie' : 'Película' }}</span>

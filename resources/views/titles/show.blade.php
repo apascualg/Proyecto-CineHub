@@ -7,7 +7,11 @@
         <a href="{{ route('dashboard') }}" class="title-detail__back">Volver al catálogo</a>
 
         <header class="title-detail__header">
-            <div class="title-detail__poster @if (!$title->poster_path) poster--fallback @endif" @if ($title->poster_path) style="background-image: url('{{ $title->poster_path }}')" @endif></div>
+            @if ($title->poster_path)
+                <img class="title-detail__poster" src="{{ $title->poster_path }}" alt="Portada de {{ $title->title }}">
+            @else
+                <div class="title-detail__poster title-detail__poster--fallback poster--fallback" aria-hidden="true"></div>
+            @endif
             <div class="title-detail__intro">
                 <span class="movie-card__type">{{ $title->type === 'series' ? 'Serie' : 'Película' }}</span>
                 <h1>{{ $title->title }}</h1>
